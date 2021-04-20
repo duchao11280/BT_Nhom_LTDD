@@ -16,6 +16,7 @@ import android.btth.notemanagementsystem.R;
 
 public class CategoryFragment extends Fragment {
 
+
     private CategoryViewModel categoryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
