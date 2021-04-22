@@ -14,4 +14,35 @@ public class Category {
 
     @ColumnInfo(name="timeCre")
     public String timeCre;
+
+    public Category(String catName, String timeCre) {
+        this.catName = catName;
+        this.timeCre = timeCre;
+    }
+
+
+    public int getCatID() {
+        return catID;
+    }
+
+    public void setCatID(int catID) {
+        this.catID = catID;
+    }
+
+    public String getCatName() {
+        return catName;
+    }
+
+    public void setCatName(String catName) {
+        this.catName = catName;
+    }
+
+    public String getTimeCre() {
+        return timeCre;
+    }
+
+    public void setTimeCre(String timeCre) {
+        this.timeCre = timeCre;
+    }
 }
+
