@@ -109,7 +109,7 @@ public class CategoryFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
 //        builder.setTitle("dsafhuie").setView(view).show();
         alertDialog.setView(view);
-        alertDialog.setTitle("Category Form");
+//        alertDialog.setTitle("Category Form");
         alertDialog.show();
 
         /**

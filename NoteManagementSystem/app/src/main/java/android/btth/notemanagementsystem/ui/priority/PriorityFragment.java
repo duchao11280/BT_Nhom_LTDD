@@ -9,6 +9,7 @@ import android.btth.notemanagementsystem.entity.Priority;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -83,7 +84,7 @@ public class PriorityFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
 
         alertDialog.setView(view);
-        alertDialog.setTitle("Priority Form");
+//        alertDialog.setTitle("Priority Form");
         alertDialog.show();
         btnClosePrio = view.findViewById(R.id.btnClosePrio);
         btnClosePrio.setOnClickListener(v -> {
@@ -122,6 +123,18 @@ public class PriorityFragment extends Fragment {
 
         });
 
+    }
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case 001:
+                prioAdapter.deleteitem(item.getGroupId());
+                return true;
+            case 002:
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
 }

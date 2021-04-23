@@ -9,6 +9,7 @@ import android.btth.notemanagementsystem.entity.Status;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -87,7 +88,7 @@ public class StatusFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
 
         alertDialog.setView(view);
-        alertDialog.setTitle("Status Form");
+//        alertDialog.setTitle("Status Form");
         alertDialog.show();
         btnCloseStatus = view.findViewById(R.id.btnCloseStatus);
         btnCloseStatus.setOnClickListener(v -> {
@@ -117,5 +118,17 @@ public class StatusFragment extends Fragment {
 
         });
 
+    }
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case 001:
+                statusAdapter.deleteitem(item.getGroupId());
+                return true;
+            case 002:
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

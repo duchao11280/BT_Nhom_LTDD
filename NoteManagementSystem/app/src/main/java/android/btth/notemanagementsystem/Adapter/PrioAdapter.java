@@ -2,9 +2,11 @@ package android.btth.notemanagementsystem.Adapter;
 
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.entity.Priority;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,17 +50,30 @@ public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolde
     }
 
     //Thiet ke de truyen vao catadapter
-    public class PrioViewHolder extends RecyclerView.ViewHolder{
+    public class PrioViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
         private TextView txtCatName;
         private TextView txtCatDate;
+        LinearLayout item_row;
 
         public PrioViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtCatName = itemView.findViewById(R.id.txtCatName);
             txtCatDate = itemView.findViewById(R.id.txtCatDate);
+            item_row = itemView.findViewById(R.id.item_row);
+            item_row.setOnCreateContextMenuListener(this);
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(this.getAdapterPosition(),001,0,"Delete");
+            menu.add(this.getAdapterPosition(),002,1,"Edit");
+        }
+    }
+    public void deleteitem(int position){
+        mListPriority.remove(position);
+        notifyDataSetChanged();
     }
 
 
