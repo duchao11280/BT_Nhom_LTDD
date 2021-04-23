@@ -29,4 +29,10 @@ public interface NoteDao {
             "Where note.catID= category.catID and note.prioID = priority.prioID and note.sttID= status.sttID and note.userID =:userID")
     List<NoteDetails> getNoteByUserID(int userID);
 
+    @Query("select sttID from note where userID = :userID group by sttID" )
+    int[] getStatusIDByUserID(int userID);
+
+    @Query("select count(*) from note where sttID=:sID and userID=:uID")
+    int getNumberNoteByUserIDandStatusID(int uID, int sID);
+
 }
