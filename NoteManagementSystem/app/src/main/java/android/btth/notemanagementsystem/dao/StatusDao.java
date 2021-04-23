@@ -13,13 +13,16 @@ import java.util.List;
 @Dao
 public interface StatusDao {
     @Query("SELECT * FROM status")
-    List<Status> getAll();
+    List<Status> getListStatus();
 
     @Insert
-    void insertCat(Status status);
+    void insertStatus(Status status);
 
     @Delete
     void delete(Status status);
+
+    @Query("DELETE FROM status")
+    void deleteAllStatus();
 
     @Query("Select sttName From status")
     String[] getSttName();

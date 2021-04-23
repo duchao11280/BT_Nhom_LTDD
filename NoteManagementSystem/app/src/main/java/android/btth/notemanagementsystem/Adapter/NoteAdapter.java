@@ -32,12 +32,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         if(note == null){
             return;
         }
-        holder.txtName.setText(note.getNoteName());
-        holder.txtCat.setText(note.getCatName());
-        holder.txtPrio.setText(note.getPrioName());
-        holder.txtSTT.setText(note.getSttName());
-        holder.txtPlan.setText(note.getTimePlan());
-        holder.txtCre.setText(note.getTimeCre());
+        holder.txtName.setText("Name: " + note.getNoteName());
+        holder.txtCat.setText("Category: " + note.getCatName());
+        holder.txtPrio.setText("Priority: " + note.getPrioName());
+        holder.txtSTT.setText("Status: " + note.getSttName());
+        holder.txtPlan.setText("Plan date: " + note.getTimePlan());
+        holder.txtCre.setText("Created Date: " + note.getTimeCre());
     }
 
     @NonNull

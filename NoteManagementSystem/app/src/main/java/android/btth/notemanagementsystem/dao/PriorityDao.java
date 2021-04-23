@@ -13,13 +13,16 @@ import java.util.List;
 @Dao
 public interface PriorityDao {
     @Query("SELECT * FROM priority")
-    List<Priority> getAll();
+    List<Priority> getListPriority();
 
     @Insert
-    void insertCat(Priority priority);
+    void insertPrio(Priority priority);
 
     @Delete
-    void delete(Priority priority);
+    void deletePrio(Priority priority);
+
+    @Query("DELETE FROM priority")
+    void deleteAllPrio();
 
     @Query("Select prioName From priority")
     String[] getPrioName();

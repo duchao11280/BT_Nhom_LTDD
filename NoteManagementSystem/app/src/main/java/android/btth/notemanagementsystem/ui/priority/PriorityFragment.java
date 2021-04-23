@@ -1,35 +1,127 @@
 package android.btth.notemanagementsystem.ui.priority;
 
+import android.app.AlertDialog;
+import android.btth.notemanagementsystem.Adapter.PrioAdapter;
+import android.btth.notemanagementsystem.AppDatabase;
+import android.btth.notemanagementsystem.R;
+import android.btth.notemanagementsystem.dao.PriorityDao;
+import android.btth.notemanagementsystem.entity.Priority;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.btth.notemanagementsystem.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class PriorityFragment extends Fragment {
 
-    private PriorityViewModel priorityViewModel;
+    public RecyclerView rcvPrio;
+    private List<Priority> mListPriority;
+    private PrioAdapter prioAdapter;
+    private FloatingActionButton fbtnPrio;
+    private Button btnAddPrio;
+    private Button btnClosePrio;
+
+    public PriorityDao priorityDao;
+
+    AppDatabase appDatabase;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        priorityViewModel =
-                new ViewModelProvider(this).get(PriorityViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_priority, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        priorityViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        rcvPrio = (RecyclerView)root.findViewById(R.id.rcv_Prio);
+
+        priorityDao = appDatabase.getInstance(getContext()).priorityDao();
+
+        fbtnPrio =(FloatingActionButton)root.findViewById(R.id.fbtnPrio);
+        fbtnPrio.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View view) {
+
+                OpenInfoDialog();
+
             }
         });
+
+
+        rcvPrio.setHasFixedSize(true);
+
+        prioAdapter = new PrioAdapter();
+        mListPriority = new ArrayList<>();
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rcvPrio.setLayoutManager(linearLayoutManager);
+
+
+
+        //gan cho mlist
+
+        mListPriority = priorityDao.getListPriority();
+        prioAdapter.setData(mListPriority);
+        rcvPrio.setAdapter(prioAdapter);
+
         return root;
     }
+
+    public void OpenInfoDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.layout_dalog_prio,null);
+        AlertDialog alertDialog = builder.create();
+
+        alertDialog.setView(view);
+        alertDialog.setTitle("Priority Form");
+        alertDialog.show();
+        btnClosePrio = view.findViewById(R.id.btnClosePrio);
+        btnClosePrio.setOnClickListener(v -> {
+            alertDialog.cancel();
+//            priorityDao.deleteAllPrio();
+        });
+
+//        EditText edtCatName = view.findViewById(R.id.edtCat);
+//        String txtCatName = edtCatName.getText().toString();
+//
+//        Calendar cal = Calendar.getInstance();
+//
+//        String strDate = DateFormat.format("EEE, MMMM/d/yyyy",cal).toString();
+//        //kiem tra du lieu co hay ko
+//        if(TextUtils.isEmpty(txtCatName) || TextUtils.isEmpty(strDate)){
+//            return;
+//        }
+
+        btnAddPrio = view.findViewById(R.id.btnAddPrio);
+        btnAddPrio.setOnClickListener(v -> {
+
+            EditText edtPrioName = view.findViewById(R.id.edtPrio);
+            String txtPrioName = edtPrioName.getText().toString();
+
+            Calendar cal = Calendar.getInstance();
+
+            String strDate = DateFormat.format("EEE, MMMM/d/yyyy",cal).toString();
+
+            priorityDao.insertPrio(new Priority(txtPrioName, strDate));
+
+            mListPriority=priorityDao.getListPriority();
+            prioAdapter.setData(mListPriority);
+            rcvPrio.setAdapter(prioAdapter);
+
+            alertDialog.cancel();
+
+        });
+
+    }
+
 }

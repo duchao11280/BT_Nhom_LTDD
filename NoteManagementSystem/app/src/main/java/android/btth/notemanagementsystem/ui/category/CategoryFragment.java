@@ -117,7 +117,7 @@ public class CategoryFragment extends Fragment implements InfoDialog.InfoDialogL
 
             String strDate = DateFormat.format("EEE, MMMM/d/yyyy",cal).toString();
 
-            categoryDao.insertCat(new Category(txtCatName,strDate));
+            categoryDao.insertCat(new Category( txtCatName, strDate));
 
             mListCategory=categoryDao.getListCategory();
             catAdapter.setData(mListCategory);

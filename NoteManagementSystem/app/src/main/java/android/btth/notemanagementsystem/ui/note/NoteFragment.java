@@ -4,12 +4,7 @@ import android.app.AlertDialog;
 import android.btth.notemanagementsystem.Adapter.NoteAdapter;
 import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
-import android.btth.notemanagementsystem.dao.NoteDao;
-import android.btth.notemanagementsystem.entity.Category;
-import android.btth.notemanagementsystem.entity.Note;
 import android.btth.notemanagementsystem.entity.NoteDetails;
-import android.btth.notemanagementsystem.entity.Priority;
-import android.btth.notemanagementsystem.entity.Status;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,21 +19,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
-
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.List;
-
-import static java.sql.Types.NULL;
 
 public class NoteFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -114,7 +103,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
 
         ArrayAdapter lstPrio = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,lstPrioName);
         lstPrio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCat.setAdapter(lstPrio);
+        spnPrio.setAdapter(lstPrio);
         //Spiner Stt
         Spinner spnStt = (Spinner) view.findViewById(R.id.spnStt);
         lstSttName = adb.getInstance(getContext()).statusDao().getSttName();

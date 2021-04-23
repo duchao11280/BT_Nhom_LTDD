@@ -1,7 +1,7 @@
 package android.btth.notemanagementsystem.Adapter;
 
 import android.btth.notemanagementsystem.R;
-import android.btth.notemanagementsystem.entity.Category;
+import android.btth.notemanagementsystem.entity.Priority;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,52 +12,48 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CatAdapter extends  RecyclerView.Adapter<CatAdapter.CatViewHolder>  {
+public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolder>  {
 
+    private List<Priority> mListPriority;
 
-    private List<Category> mListCategory;
-
-    public void setData(List<Category> list){
-        this.mListCategory = list;
+    public void setData(List<Priority> list){
+        this.mListPriority = list;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public CatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PrioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_cat,parent,false);
 
-        return new CatViewHolder(view);
+        return new PrioViewHolder(view);
+
     }
 
-    //set du lieu len
     @Override
-    public void onBindViewHolder(@NonNull CatViewHolder holder, int position) {
-
-        Category category = mListCategory.get(position);
-        if(category ==null)
+    public void onBindViewHolder(@NonNull PrioViewHolder holder, int position) {
+        Priority priority = mListPriority.get(position);
+        if(priority ==null)
             return;
-        holder.txtCatName.setText("Name: " + category.getCatName());
-        holder.txtCatDate.setText("Created Date: " + category.getTimeCre());
+        holder.txtCatName.setText("Name: " + priority.getPrioName());
+        holder.txtCatDate.setText("Created Date: " + priority.getTimeCre());
     }
 
     @Override
     public int getItemCount() {
-        if(mListCategory != null){
-            return mListCategory.size();
+        if(mListPriority != null){
+            return mListPriority.size();
         }
         return 0;
     }
 
-
-
     //Thiet ke de truyen vao catadapter
-    public class CatViewHolder extends RecyclerView.ViewHolder{
+    public class PrioViewHolder extends RecyclerView.ViewHolder{
 
         private TextView txtCatName;
         private TextView txtCatDate;
 
-        public CatViewHolder(@NonNull View itemView) {
+        public PrioViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txtCatName = itemView.findViewById(R.id.txtCatName);

@@ -19,4 +19,27 @@ public class Priority {
         this.prioName = prioName;
         this.timeCre = timeCre;
     }
+    public int getPrioID() {
+        return prioID;
+    }
+
+    public void setPrioID(int prioID) {
+        this.prioID = prioID;
+    }
+
+    public String getPrioName() {
+        return prioName;
+    }
+
+    public void setPrioName(String prioName) {
+        this.prioName = prioName;
+    }
+
+    public String getTimeCre() {
+        return timeCre;
+    }
+
+    public void setTimeCre(String timeCre) {
+        this.timeCre = timeCre;
+    }
 }

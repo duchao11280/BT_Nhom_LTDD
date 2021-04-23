@@ -19,4 +19,27 @@ public class Status {
         this.sttName = sttName;
         this.timeCre = timeCre;
     }
+    public int getSttID() {
+        return sttID;
+    }
+
+    public void setSttID(int sttID) {
+        this.sttID = sttID;
+    }
+
+    public String getSttName() {
+        return sttName;
+    }
+
+    public void setSttName(String sttName) {
+        this.sttName = sttName;
+    }
+
+    public String getTimeCre() {
+        return timeCre;
+    }
+
+    public void setTimeCre(String timeCre) {
+        this.timeCre = timeCre;
+    }
 }
