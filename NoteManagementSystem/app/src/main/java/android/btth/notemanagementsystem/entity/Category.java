@@ -15,12 +15,20 @@ public class Category {
     @ColumnInfo(name="timeCre")
     public String timeCre;
 
+    /**
+     * constructer
+     * @param catName
+     * @param timeCre
+     */
     public Category(String catName, String timeCre) {
         this.catName = catName;
         this.timeCre = timeCre;
     }
 
-
+    /**
+     * cac getter, setter
+     * @return
+     */
     public int getCatID() {
         return catID;
     }
