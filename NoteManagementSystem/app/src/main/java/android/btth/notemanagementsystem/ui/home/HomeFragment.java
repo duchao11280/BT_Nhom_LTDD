@@ -44,10 +44,8 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
 //        database.getInstance(getContext());
         sharedPreferences = this.getActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
         userID = sharedPreferences.getInt("userID",0);
@@ -58,12 +56,6 @@ public class HomeFragment extends Fragment {
         pie.setDragDecelerationFrictionCoef(0.99f);
         pie.setDrawHoleEnabled(false);
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         setupPieChart();
         return root;
     }
@@ -92,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-        dataSet.setColors(color);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
         PieData data= new PieData((dataSet));
         data.setValueTextSize(10f);

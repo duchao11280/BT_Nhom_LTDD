@@ -52,6 +52,14 @@ public class SignupActivity extends AppCompatActivity {
         String password = edtPass.getText().toString();
         String confpass = edtConfirnPass.getText().toString();
         //Check Input
+        User us = appDatabase.userDao().getUserByEmail(userEmail);
+        if(us!=null){
+            edtEmail.setError("Email already exist");
+            return;
+        }
+        else{
+            edtEmail.setError(null);
+        }
         if(userEmail.length() == 0)
         {
             edtEmail.setError("Enter you email");
