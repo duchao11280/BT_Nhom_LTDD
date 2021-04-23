@@ -26,4 +26,7 @@ public interface PriorityDao {
 
     @Query("Select prioName From priority")
     String[] getPrioName();
+
+    @Query("select prioID from priority where prioName=:pName Limit 1")
+    int getPrioIdByPrioName(String pName);
 }

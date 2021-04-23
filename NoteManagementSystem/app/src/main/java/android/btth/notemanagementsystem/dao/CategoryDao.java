@@ -26,4 +26,7 @@ public interface CategoryDao {
 
     @Query("Select catName From category")
     String[] getCatName();
+
+    @Query("select catID from category where catName=:cName Limit 1")
+    int getCatIdByCatName(String cName);
 }

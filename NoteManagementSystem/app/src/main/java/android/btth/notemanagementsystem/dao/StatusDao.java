@@ -26,7 +26,8 @@ public interface StatusDao {
 
     @Query("Select sttName From status")
     String[] getSttName();
-
+    @Query("select sttID from status where sttName=:sName Limit 1")
+    int getSttIdBySttName(String sName);
     @Query("select sttName from status where sttID=:sID")
     String getStatusNameBySttID(int sID);
 }
