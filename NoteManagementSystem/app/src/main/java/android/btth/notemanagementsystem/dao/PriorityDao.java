@@ -20,4 +20,7 @@ public interface PriorityDao {
 
     @Delete
     void delete(Priority priority);
+
+    @Query("Select prioName From priority")
+    String[] getPrioName();
 }

@@ -1,6 +1,7 @@
 package android.btth.notemanagementsystem.dao;
 
 import android.btth.notemanagementsystem.entity.Note;
+import android.btth.notemanagementsystem.entity.NoteDetails;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -15,8 +16,17 @@ public interface NoteDao {
     List<Note> getAll();
 
     @Insert
-    void insertCat(Note note);
+    void insertNote(Note note);
 
     @Delete
     void delete(Note note);
+
+    @Query("SELECT * FROM NoteDetails")
+    List<NoteDetails> getAllNoteDetails();
+
+    @Query("SELECT noteID,noteName,catName,prioName,sttName,timePlan,note.timeCre as timeCre " +
+            "FROM note,category,priority,status " +
+            "Where note.catID= category.catID and note.prioID = priority.prioID and note.sttID= status.sttID and note.userID =:userID")
+    List<NoteDetails> getNoteByUserID(int userID);
+
 }

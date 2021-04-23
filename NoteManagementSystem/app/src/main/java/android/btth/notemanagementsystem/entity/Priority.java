@@ -14,4 +14,9 @@ public class Priority {
 
     @ColumnInfo(name="timeCre")
     public String timeCre;
+
+    public Priority(String prioName, String timeCre) {
+        this.prioName = prioName;
+        this.timeCre = timeCre;
+    }
 }

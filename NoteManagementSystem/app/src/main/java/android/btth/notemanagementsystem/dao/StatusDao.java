@@ -20,4 +20,7 @@ public interface StatusDao {
 
     @Delete
     void delete(Status status);
+
+    @Query("Select sttName From status")
+    String[] getSttName();
 }

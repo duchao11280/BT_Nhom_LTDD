@@ -36,7 +36,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         holder.txtCat.setText(note.getCatName());
         holder.txtPrio.setText(note.getPrioName());
         holder.txtSTT.setText(note.getSttName());
-        holder.txtPlan.setText(note.getTimePlane());
+        holder.txtPlan.setText(note.getTimePlan());
         holder.txtCre.setText(note.getTimeCre());
     }
 

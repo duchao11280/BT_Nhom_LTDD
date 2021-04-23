@@ -36,4 +36,11 @@
     <string name="enter_current_password">Enter Current Password</string>
     <string name="enter_new_password">Enter new password</string>
     <string name="enter_password_again">Enter password again</string>
+    
+    <string name="enter_note_name">Enter Note Name</string>
+    <string name="select_category">Select category...</string>
+    <string name="select_priority">Select priority...</string>
+    <string name="select_status">Select status...</string>
+    <string name="select_plan_date">Select plan date</string>
+    <string name="bacham">...</string>
 </resources>

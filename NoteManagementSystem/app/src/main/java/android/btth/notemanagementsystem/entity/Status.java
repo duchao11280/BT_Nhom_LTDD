@@ -14,4 +14,9 @@ public class Status {
 
     @ColumnInfo(name="timeCre")
     public String timeCre;
+
+    public Status(String sttName, String timeCre) {
+        this.sttName = sttName;
+        this.timeCre = timeCre;
+    }
 }

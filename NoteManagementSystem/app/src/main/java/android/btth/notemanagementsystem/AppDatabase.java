@@ -18,7 +18,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {Category.class, Priority.class, Status.class, Note.class, User.class},
-        views = {NoteDetails.class},version =2 )
+        views = {NoteDetails.class},version =3 )
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "notemanagement.db";
     private static AppDatabase instance;

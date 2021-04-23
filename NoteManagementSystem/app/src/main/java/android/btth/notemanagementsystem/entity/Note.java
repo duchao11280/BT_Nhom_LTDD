@@ -26,4 +26,16 @@ public class Note {
 
     @ColumnInfo(name="timeCre")
     public String timeCre;
+
+    public int userID;
+
+    public Note(String noteName, int catID, int prioID, int sttID, String timePlan, String timeCre,int userID) {
+        this.noteName = noteName;
+        this.catID = catID;
+        this.prioID = prioID;
+        this.sttID = sttID;
+        this.timePlan = timePlan;
+        this.timeCre = timeCre;
+        this.userID = userID;
+    }
 }

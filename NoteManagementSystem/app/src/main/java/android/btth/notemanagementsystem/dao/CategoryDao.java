@@ -23,4 +23,7 @@ public interface CategoryDao {
 
     @Query("DELETE FROM category")
     void deleteAll();
+
+    @Query("Select catName From category")
+    String[] getCatName();
 }
