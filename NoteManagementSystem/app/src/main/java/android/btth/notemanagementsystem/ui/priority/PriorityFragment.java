@@ -149,7 +149,7 @@ public class PriorityFragment extends Fragment {
         EditText edtPrioName = view.findViewById(R.id.edtPrio);
 //        System.out.println(newCatName);
         Calendar cal = Calendar.getInstance();
-
+        edtPrioName.setText(c.prioName);
         String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
         save.setText("Save");
         AlertDialog alertDialog = builder.create();

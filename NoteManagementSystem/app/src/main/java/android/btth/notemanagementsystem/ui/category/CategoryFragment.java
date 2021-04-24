@@ -194,8 +194,7 @@ public class CategoryFragment extends Fragment {
         Calendar cal = Calendar.getInstance();
 
         String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
-
-
+        edtCatName.setText(c.catName);
 
         save.setText("Save");
         AlertDialog alertDialog = builder.create();

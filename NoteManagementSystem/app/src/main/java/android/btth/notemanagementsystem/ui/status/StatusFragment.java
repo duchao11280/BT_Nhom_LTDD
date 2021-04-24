@@ -143,6 +143,7 @@ public class StatusFragment extends Fragment {
         EditText edtStatusName = view.findViewById(R.id.edtStatus);
 //        System.out.println(newCatName);
         Calendar cal = Calendar.getInstance();
+        edtStatusName.setText(c.sttName);
 
         String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
         save.setText("Save");

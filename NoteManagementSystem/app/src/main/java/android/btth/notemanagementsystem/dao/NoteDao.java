@@ -7,6 +7,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -34,5 +35,11 @@ public interface NoteDao {
 
     @Query("select count(*) from note where sttID=:sID and userID=:uID")
     int getNumberNoteByUserIDandStatusID(int uID, int sID);
+
+    @Query("select * from note where noteID=:noteID")
+    Note getNotebyNoteID(int noteID);
+
+    @Update
+    void Update(Note note);
 
 }
