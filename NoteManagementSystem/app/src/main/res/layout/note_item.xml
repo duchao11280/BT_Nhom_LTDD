@@ -7,8 +7,8 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="413dp"
-        android:layout_height="139dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +48,7 @@
             android:id="@+id/txtCre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="TextView"
+            android:layout_marginBottom="10dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

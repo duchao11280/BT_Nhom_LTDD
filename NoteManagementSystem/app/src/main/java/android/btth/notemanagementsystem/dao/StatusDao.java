@@ -1,12 +1,14 @@
 package android.btth.notemanagementsystem.dao;
 
 
+import android.btth.notemanagementsystem.entity.Priority;
 import android.btth.notemanagementsystem.entity.Status;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public interface StatusDao {
 
     @Query("DELETE FROM status")
     void deleteAllStatus();
+
+    @Update
+    void update (Status status);
 
     @Query("Select sttName From status")
     String[] getSttName();

@@ -5,6 +5,7 @@ import android.btth.notemanagementsystem.Adapter.StatusAdapter;
 import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.dao.StatusDao;
+import android.btth.notemanagementsystem.entity.Priority;
 import android.btth.notemanagementsystem.entity.Status;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -106,7 +107,7 @@ public class StatusFragment extends Fragment {
 
             Calendar cal = Calendar.getInstance();
 
-            String strDate = DateFormat.format("EEE, MMMM/d/yyyy",cal).toString();
+            String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
 
             statusDao.insertStatus(  new Status( txtStatusName, strDate));
 
@@ -121,14 +122,57 @@ public class StatusFragment extends Fragment {
     }
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-
+        Status c = mListStatus.get(item.getGroupId());
         switch (item.getItemId()){
             case 001:
-                statusAdapter.deleteitem(item.getGroupId());
+                mListStatus.remove(item.getGroupId());
+                appDatabase.getInstance(getContext()).statusDao().delete(c);
+                statusAdapter.notifyDataSetChanged();
                 return true;
             case 002:
+                OpenInfoDialog2(c,item);
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    public void OpenInfoDialog2(Status c, MenuItem item){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.layout_dialog_status,null);
+        Button save =view.findViewById(R.id.btnAddStatus);
+        EditText edtStatusName = view.findViewById(R.id.edtStatus);
+//        System.out.println(newCatName);
+        Calendar cal = Calendar.getInstance();
+
+        String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
+        save.setText("Save");
+        AlertDialog alertDialog = builder.create();
+//        builder.setTitle("dsafhuie").setView(view).show();
+        alertDialog.setView(view);
+//        alertDialog.setTitle("Category Form");
+        alertDialog.show();
+        save.setOnClickListener(v -> {
+            String newStatusName=edtStatusName.getText().toString();
+            c.setSttName(newStatusName);
+            c.setTimeCre(strDate);
+            appDatabase.getInstance(getContext()).statusDao().update(c);
+            mListStatus.remove(item.getGroupId());
+            mListStatus.add(c);
+            statusAdapter.notifyDataSetChanged();
+            alertDialog.cancel();
+        });
+
+        /**
+         * su kien nut close
+         */
+        btnCloseStatus = view.findViewById(R.id.btnCloseStatus);
+        btnCloseStatus.setOnClickListener(v -> {
+            alertDialog.cancel();
+//            categoryDao.deleteAll();
+        });
+
+
+
+
     }
 }

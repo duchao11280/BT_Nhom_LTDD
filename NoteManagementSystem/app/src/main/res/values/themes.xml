@@ -15,15 +15,22 @@
     </style>
 
     <style name="EventDialog" parent="Theme.AppCompat.Light.NoActionBar">
-<!--        <item name="android:layout_width">match_parent</item>-->
-<!--        <item name="android:layout_height">match_parent</item>-->
-<!--        <item name="android:windowFullscreen">false</item>-->
+        <!--        <item name="android:layout_width">match_parent</item>-->
+        <!--        <item name="android:layout_height">match_parent</item>-->
+        <!--        <item name="android:windowFullscreen">false</item>-->
 
     </style>
 
     <style name="Theme.NoteManagementSystem.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="DateTimeDialog" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorAccent">#CC3366</item>
     </style>
 
     <style name="Theme.NoteManagementSystem.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

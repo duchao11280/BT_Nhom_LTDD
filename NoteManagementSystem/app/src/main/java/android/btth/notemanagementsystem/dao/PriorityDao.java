@@ -7,6 +7,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface PriorityDao {
 
     @Query("DELETE FROM priority")
     void deleteAllPrio();
+
+    @Update
+    void update (Priority priority);
 
     @Query("Select prioName From priority")
     String[] getPrioName();

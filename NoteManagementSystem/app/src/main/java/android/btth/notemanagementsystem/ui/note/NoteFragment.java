@@ -177,7 +177,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         final int day = cal.get(Calendar.DAY_OF_MONTH);
         //Initialize Date Picker Dialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getContext(), android.R.style.Theme_Material_Light_NoActionBar_Fullscreen,
+                getContext(), R.style.DateTimeDialog,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {

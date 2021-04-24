@@ -144,8 +144,11 @@ public class CategoryFragment extends Fragment {
             String txtCatName = edtCatName.getText().toString();
 
             Calendar cal = Calendar.getInstance();
+            String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
 
-            String strDate = DateFormat.format("EEE, MMMM/d/yyyy",cal).toString();
+
+
+
 
             /**
              * them du lieu va roomdatabase
@@ -167,17 +170,62 @@ public class CategoryFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-
+        Category c = mListCategory.get(item.getGroupId());
         switch (item.getItemId()){
             case 001:
-                catAdapter.deleteitem(item.getGroupId());
+                mListCategory.remove(item.getGroupId());
+                appDatabase.getInstance(getContext()).categoryDao().delete(c);
+                catAdapter.notifyDataSetChanged();
                 return true;
             case 002:
+                OpenInfoDialog2(c,item);
                 return true;
         }
         return super.onContextItemSelected(item);
     }
 
 
+    public void OpenInfoDialog2(Category c, MenuItem item){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.layout_dialog,null);
+        Button save =view.findViewById(R.id.btnAdd);
+        EditText edtCatName = view.findViewById(R.id.edtCat);
+//        System.out.println(newCatName);
+        Calendar cal = Calendar.getInstance();
+
+        String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
+
+
+
+        save.setText("Save");
+        AlertDialog alertDialog = builder.create();
+//        builder.setTitle("dsafhuie").setView(view).show();
+        alertDialog.setView(view);
+//        alertDialog.setTitle("Category Form");
+        alertDialog.show();
+        save.setOnClickListener(v -> {
+            String newCatName=edtCatName.getText().toString();
+            c.setCatName(newCatName);
+            c.setTimeCre(strDate);
+            appDatabase.getInstance(getContext()).categoryDao().update(c);
+            mListCategory.remove(item.getGroupId());
+            mListCategory.add(c);
+            catAdapter.notifyDataSetChanged();
+            alertDialog.cancel();
+        });
+
+        /**
+         * su kien nut close
+         */
+        btnClose = view.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(v -> {
+            alertDialog.cancel();
+//            categoryDao.deleteAll();
+        });
+
+
+
+
+    }
 
 }
