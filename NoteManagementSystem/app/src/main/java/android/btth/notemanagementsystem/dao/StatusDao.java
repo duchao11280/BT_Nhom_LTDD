@@ -35,4 +35,8 @@ public interface StatusDao {
     int getSttIdBySttName(String sName);
     @Query("select sttName from status where sttID=:sID")
     String getStatusNameBySttID(int sID);
+
+    //Check sttName in database
+    @Query("Select Count(*) From status where sttName=:sttNameCheck")
+    int checkSttNameinDb(String sttNameCheck);
 }

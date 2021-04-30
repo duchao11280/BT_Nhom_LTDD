@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,9 +37,9 @@ public class StatusFragment extends Fragment {
     private FloatingActionButton fbtnStatus;
     private Button btnAddStatus;
     private Button btnCloseStatus;
-
+    String[] sttNameDefault= {"Processing","Done","Pending"};
     public StatusDao statusDao;
-
+    List<String> test1;
     AppDatabase appDatabase;
 
 
@@ -75,6 +76,7 @@ public class StatusFragment extends Fragment {
         //gan cho mlist
 
         mListStatus = statusDao.getListStatus();
+
         statusAdapter.setData(mListStatus);
         rcvStatus.setAdapter(statusAdapter);
 
@@ -82,7 +84,9 @@ public class StatusFragment extends Fragment {
     }
 
 
-
+    /**
+     * Dialog Add Status
+     */
     public void OpenInfoDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = getLayoutInflater().inflate(R.layout.layout_dialog_status,null);
@@ -98,25 +102,43 @@ public class StatusFragment extends Fragment {
         });
 
 
-
         btnAddStatus = view.findViewById(R.id.btnAddStatus);
+
         btnAddStatus.setOnClickListener(v -> {
 
             EditText edtStatusName = view.findViewById(R.id.edtStatus);
-            String txtStatusName = edtStatusName.getText().toString();
 
-            Calendar cal = Calendar.getInstance();
+            String txtStatusName = edtStatusName.getText().toString().trim();
+            boolean flagforadd = false;
+            for (String obj: sttNameDefault
+                 ) {
+                if(obj.equals(txtStatusName)){
+                    flagforadd = true;
+                }
+            }
+            if(flagforadd==true) {
+                if(statusDao.checkSttNameinDb(txtStatusName)>0){
+                    edtStatusName.setError("Status nay da ton tai");
+                    return;
+                }
+                else{
+                    Calendar cal = Calendar.getInstance();
 
-            String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
+                    String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
 
-            statusDao.insertStatus(  new Status( txtStatusName, strDate));
+                    statusDao.insertStatus(  new Status( txtStatusName, strDate));
 
-            mListStatus=statusDao.getListStatus();
-            statusAdapter.setData(mListStatus);
-            rcvStatus.setAdapter(statusAdapter);
+                    mListStatus=statusDao.getListStatus();
+                    statusAdapter.setData(mListStatus);
+                    rcvStatus.setAdapter(statusAdapter);
 
-            alertDialog.cancel();
-
+                    alertDialog.cancel();
+                }
+            }
+            else {
+                edtStatusName.setError("Vui long nhap dung ten status");
+                return;
+            }
         });
 
     }
@@ -154,13 +176,33 @@ public class StatusFragment extends Fragment {
         alertDialog.show();
         save.setOnClickListener(v -> {
             String newStatusName=edtStatusName.getText().toString();
-            c.setSttName(newStatusName);
-            c.setTimeCre(strDate);
-            appDatabase.getInstance(getContext()).statusDao().update(c);
-            mListStatus.remove(item.getGroupId());
-            mListStatus.add(c);
-            statusAdapter.notifyDataSetChanged();
-            alertDialog.cancel();
+            boolean flagforadd = false;
+            for (String obj: sttNameDefault
+            ) {
+                if(obj.equals(newStatusName)){
+                    flagforadd = true;
+                }
+            }
+            if(flagforadd==true) {
+                if(statusDao.checkSttNameinDb(newStatusName)>0){
+                    edtStatusName.setError("Status nay da ton tai");
+                    return;
+                }
+                else{
+                    c.setSttName(newStatusName);
+                    c.setTimeCre(strDate);
+                    appDatabase.getInstance(getContext()).statusDao().update(c);
+                    mListStatus.remove(item.getGroupId());
+                    mListStatus.add(c);
+                    statusAdapter.notifyDataSetChanged();
+                    alertDialog.cancel();
+                }
+            }
+            else {
+                edtStatusName.setError("Vui long nhap dung ten status");
+                return;
+            }
+
         });
 
         /**

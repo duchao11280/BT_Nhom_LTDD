@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setColors(color);
 
         PieData data= new PieData((dataSet));
         data.setValueTextSize(10f);
