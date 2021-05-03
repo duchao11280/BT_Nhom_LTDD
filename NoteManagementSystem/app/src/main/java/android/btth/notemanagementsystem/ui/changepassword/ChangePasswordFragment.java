@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.SigninActivity;
+import android.btth.notemanagementsystem.ui.home.HomeFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 public class ChangePasswordFragment extends Fragment {
 
@@ -22,6 +26,7 @@ public class ChangePasswordFragment extends Fragment {
     private EditText edtNewPass;
     private EditText edtConfPass;
     private Button btnChangePass;
+    private Button btnHomeinChangePass;
     private SharedPreferences sharedPreferences;
     private AppDatabase appDatabase;
 
@@ -35,6 +40,9 @@ public class ChangePasswordFragment extends Fragment {
         btnChangePass.setOnClickListener(v -> {
             changePassword();
         });
+        btnHomeinChangePass.setOnClickListener(v -> {
+            openHomeFragment();
+        });
         return root;
     }
 
@@ -43,6 +51,7 @@ public class ChangePasswordFragment extends Fragment {
         edtNewPass = root.findViewById(R.id.edtNewPass);
         edtConfPass = root.findViewById(R.id.edtConfPass);
         btnChangePass = root.findViewById(R.id.btnChangePassword);
+        btnHomeinChangePass = root.findViewById(R.id.btnHomeChangepass);
     }
 
     public void changePassword(){
@@ -86,6 +95,13 @@ public class ChangePasswordFragment extends Fragment {
         edtConfPass.setText("");
         edtNewPass.setText("");
         edtCurPass.setText("");
+        Toast.makeText(getContext(),"Change password successfully!!", Toast.LENGTH_LONG);
+    }
+
+    /**
+     * Open Home Fragment
+     **/
+    private void openHomeFragment(){
     }
 
 }

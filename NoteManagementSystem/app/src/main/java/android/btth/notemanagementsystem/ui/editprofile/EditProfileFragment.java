@@ -1,6 +1,7 @@
 package android.btth.notemanagementsystem.ui.editprofile;
 
 import android.btth.notemanagementsystem.AppDatabase;
+import android.btth.notemanagementsystem.Main2Activity;
 import android.btth.notemanagementsystem.R;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.navigation.NavigationView;
 
 public class EditProfileFragment extends Fragment {
 
@@ -69,6 +73,9 @@ public class EditProfileFragment extends Fragment {
         editor.putString("userLastname",lastname);
         editor.putString("userEmail",email);
         editor.commit();
-        Toast.makeText(getContext(),"Change profile successfully",Toast.LENGTH_LONG).show();
+        NavigationView view = getActivity().findViewById(R.id.nav_view);
+        TextView txtEmail = view.getHeaderView(0).findViewById(R.id.txtEmail);
+        txtEmail.setText(email);
+        Toast.makeText(getContext(),"Change profile successfully!!", Toast.LENGTH_LONG);
     }
 }

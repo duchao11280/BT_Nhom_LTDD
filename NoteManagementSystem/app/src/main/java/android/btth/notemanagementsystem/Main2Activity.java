@@ -1,7 +1,10 @@
 package android.btth.notemanagementsystem;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ public class Main2Activity extends AppCompatActivity implements InfoDialog.InfoD
     private EditText edtCat;
     private TextView txtDiaForm;
     FloatingActionButton fab;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,13 @@ public class Main2Activity extends AppCompatActivity implements InfoDialog.InfoD
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
+        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+        NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
+        View headerlayout = navigationView1.getHeaderView(0);
+        TextView txtEmail = headerlayout.findViewById(R.id.txtEmail);
+        txtEmail.setText(sharedPreferences.getString("email","kylh84@gmail.com"));
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_category, R.id.nav_priority,
                 R.id.nav_status, R.id.nav_note, R.id.nav_editprofile,
