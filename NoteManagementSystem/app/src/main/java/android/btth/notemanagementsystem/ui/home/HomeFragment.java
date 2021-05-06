@@ -40,13 +40,17 @@ public class HomeFragment extends Fragment {
     private int userID;
     private List<Note> lstNote;
     private int[] lstStatusID;
-    int [] color={ Color.rgb(153,153,153),Color.rgb(255,0,0), Color.rgb(0,0,255)};
+    int [] color;
+//            = { Color.rgb(153,153,153),Color.rgb(255,0,0), Color.rgb(0,0,255)};
+
+    private final int done = -1, processing=0, pending=1, wrongStatus=-2;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        database.getInstance(getContext());
+
         sharedPreferences = this.getActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
         userID = sharedPreferences.getInt("userID",0);
         pie= root.findViewById(R.id.piechart);
@@ -62,23 +66,34 @@ public class HomeFragment extends Fragment {
 
     public void setupPieChart(){
 
-        //lstNote = database.noteDao().getAll();
-        //lstStatusID = database.noteDao().getStatusIDByUserID(userID);
         lstNote = AppDatabase.getInstance(getContext()).noteDao().getAll();
         lstStatusID = AppDatabase.getInstance(getContext()).noteDao().getStatusIDByUserID(userID);
-        System.out.println(lstStatusID.length);
+
         ArrayList<PieEntry> pieEntries= new ArrayList<>();
         String temp;
-        int count;
+        int count, checkStatusName, countColorId;
+
+        System.out.println(lstStatusID);
+        //colorArr of pieChart
+        color= new int[lstStatusID.length];
+        countColorId=0;
+
         for(int i:lstStatusID){
             temp=AppDatabase.getInstance(getContext()).statusDao().getStatusNameBySttID(i);
+
+            System.out.println("Lenght: "+lstStatusID.length);
+
+            //check status name
+            checkStatusName= checkStatusName(temp);
+            System.out.println(checkStatusName);
+            //set up color up to StatusID
+            setColorPieChart(countColorId++, checkStatusName);
+            System.out.println(i+"  <--i:countColorID--> "+countColorId);
+
             count=AppDatabase.getInstance(getContext()).noteDao().getNumberNoteByUserIDandStatusID(userID,i);
             pieEntries.add(new PieEntry(count,temp));
         }
 
-//        pieEntries.add(new PieEntry(60, "Processing"));
-//        pieEntries.add(new PieEntry(20, "Done"));
-//        pieEntries.add(new PieEntry(20, "Pending"));
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "test");
 
@@ -92,4 +107,32 @@ public class HomeFragment extends Fragment {
 
         pie.setData(data);
     }
+
+    private void setColorPieChart(int i, int checkStatusName) {
+        if(checkStatusName == wrongStatus)
+            return;
+        if(checkStatusName == done)
+            color[i] = Color.rgb(0,0,255);
+        if(checkStatusName == processing)
+            color[i] = Color.rgb(153,153,153);
+        if(checkStatusName == pending)
+            color[i] = Color.rgb(255,0,0);
+    }
+
+
+    public int checkStatusName(String statusName){
+        if(statusName.equals("Done"))
+            return done;
+
+        if(statusName.equals("Processing"))
+            return processing;
+
+        if(statusName.equals("Pending"))
+            return pending;
+
+        return wrongStatus;
+    }
+
+
+
 }
