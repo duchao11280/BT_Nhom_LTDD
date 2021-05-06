@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,10 @@ public class CategoryFragment extends Fragment {
     private FloatingActionButton fbtnCat;
     private Button btnAdd;
     private Button btnClose;
+    private int numcat;
+    private String m1;
+    private String m2;
+
 
     public CategoryDao categoryDao;
 
@@ -62,7 +67,17 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                OpenInfoDialog();
+                numcat = categoryDao.getNumberCat();
+                System.out.println(numcat);
+                if(numcat<3){
+                    OpenInfoDialog();
+                }
+                else {
+                    Toast.makeText(getContext(), "Khong the them Category vi chi duoc toi da 3 category", Toast.LENGTH_LONG).show();
+
+                }
+
+
 
             }
         });
@@ -137,6 +152,10 @@ public class CategoryFragment extends Fragment {
         btnAdd = view.findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(v -> {
 
+
+
+
+
             /**
              * anh xa du lieu tu view
              */
@@ -146,14 +165,160 @@ public class CategoryFragment extends Fragment {
             Calendar cal = Calendar.getInstance();
             String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
 
+//            System.out.println(mListCategory.get(0).catName);
+//            System.out.println(mListCategory.get(1).catName);
 
+            numcat = categoryDao.getNumberCat();
 
-
+            System.out.println(txtCatName);
 
             /**
-             * them du lieu va roomdatabase
+             * numcat = 0 la ko ca category nao
+             * numcat = 1 la co san 1 category
+             * numcat = 2 la co san 2 category
              */
-            categoryDao.insertCat(new Category( txtCatName, strDate));
+            if(numcat == 0 ){
+                if(txtCatName.equals("Study")){
+                    categoryDao.insertCat(new Category( txtCatName, strDate));
+                    mListCategory=categoryDao.getListCategory();
+                    catAdapter.setData(mListCategory);
+                    rcvCat.setAdapter(catAdapter);
+
+                    alertDialog.cancel();
+                    return;
+                }
+                else if(txtCatName.equals("Working")){
+                    categoryDao.insertCat(new Category( txtCatName, strDate));
+                    mListCategory=categoryDao.getListCategory();
+                    catAdapter.setData(mListCategory);
+
+                    rcvCat.setAdapter(catAdapter);
+
+                    alertDialog.cancel();
+                    return;
+                }
+                else if(txtCatName.equals("Relax")){
+                    categoryDao.insertCat(new Category( txtCatName, strDate));
+                    mListCategory=categoryDao.getListCategory();
+                    catAdapter.setData(mListCategory);
+                    rcvCat.setAdapter(catAdapter);
+
+                    alertDialog.cancel();
+                    return;
+                }
+                else {
+                    Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            else if(numcat==1){
+                m1 = mListCategory.get(0).catName;
+                System.out.println(m1);
+
+                if(!txtCatName.equals(m1)){
+
+                    if(txtCatName.equals("Study")){
+                        categoryDao.insertCat(new Category( txtCatName, strDate));
+                        mListCategory=categoryDao.getListCategory();
+                        catAdapter.setData(mListCategory);
+                        rcvCat.setAdapter(catAdapter);
+
+                        alertDialog.cancel();
+                        return;
+                    }
+                    else if(txtCatName.equals("Working")){
+                        categoryDao.insertCat(new Category( txtCatName, strDate));
+                        mListCategory=categoryDao.getListCategory();
+                        catAdapter.setData(mListCategory);
+
+                        rcvCat.setAdapter(catAdapter);
+
+                        alertDialog.cancel();
+                        return;
+                    }
+                    else if(txtCatName.equals("Relax")){
+                        categoryDao.insertCat(new Category( txtCatName, strDate));
+                        mListCategory=categoryDao.getListCategory();
+                        catAdapter.setData(mListCategory);
+                        rcvCat.setAdapter(catAdapter);
+
+                        alertDialog.cancel();
+                        return;
+                    }
+                    else {
+                        Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                }else {
+                    Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+
+            }
+            else if(numcat ==2){
+                m1 = mListCategory.get(0).catName;
+                m2 = mListCategory.get(1).catName;
+                System.out.println(m1);
+                System.out.println(m2);
+
+                if(!txtCatName.equals(m1) && !txtCatName.equals(m2)){
+                    if(txtCatName.equals("Study")){
+                        categoryDao.insertCat(new Category( txtCatName, strDate));
+                        mListCategory=categoryDao.getListCategory();
+                        catAdapter.setData(mListCategory);
+                        rcvCat.setAdapter(catAdapter);
+
+                        alertDialog.cancel();
+                        return;
+                    }
+                    else if(txtCatName.equals("Working")){
+                        categoryDao.insertCat(new Category( txtCatName, strDate));
+                        mListCategory=categoryDao.getListCategory();
+                        catAdapter.setData(mListCategory);
+
+                        rcvCat.setAdapter(catAdapter);
+
+                        alertDialog.cancel();
+                        return;
+                    }
+                    else if(txtCatName.equals("Relax")){
+                        categoryDao.insertCat(new Category( txtCatName, strDate));
+                        mListCategory=categoryDao.getListCategory();
+                        catAdapter.setData(mListCategory);
+                        rcvCat.setAdapter(catAdapter);
+
+                        alertDialog.cancel();
+                        return;
+                    }
+                    else {
+                        Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                else {
+                    Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
+
+
+            /*if(txtCatName != "Study" || txtCatName != "Working" || txtCatName != "Relax")
+            {
+                Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
+                return;
+            }
+            else {
+                *//**
+                 * them du lieu va roomdatabase
+                 *//*
+                categoryDao.insertCat(new Category( txtCatName, strDate));
+            }
+*/
+
+
             /**
              * cap nhat lai va hien thi len recyclerview
              */
@@ -167,24 +332,46 @@ public class CategoryFragment extends Fragment {
 
     }
 
-
+    /**
+     * tao context menu cho tung item trong recyclerview
+     * @param item
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Category c = mListCategory.get(item.getGroupId());
         switch (item.getItemId()){
+            /**
+             * case 001 la nut delete
+             * case 002 la nut edit
+             */
             case 001:
                 mListCategory.remove(item.getGroupId());
                 appDatabase.getInstance(getContext()).categoryDao().delete(c);
                 catAdapter.notifyDataSetChanged();
                 return true;
             case 002:
-                OpenInfoDialog2(c,item);
+                numcat = categoryDao.getNumberCat();
+
+                System.out.println(numcat);
+
+                if(numcat<3){
+                    OpenInfoDialog2(c,item);
+                }
+                else {
+                    Toast.makeText(getContext(), "Khong the edit Category vi chi duoc toi da 3 category Study, Working, Relax", Toast.LENGTH_LONG).show();
+                }
+
                 return true;
         }
         return super.onContextItemSelected(item);
     }
 
-
+    /**
+     * mo dialog khi an nut edit tu 1 item trong category
+     * @param c
+     * @param item
+     */
     public void OpenInfoDialog2(Category c, MenuItem item){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = getLayoutInflater().inflate(R.layout.layout_dialog,null);
@@ -202,15 +389,103 @@ public class CategoryFragment extends Fragment {
         alertDialog.setView(view);
 //        alertDialog.setTitle("Category Form");
         alertDialog.show();
+        /**
+         * su kien nut save
+         */
         save.setOnClickListener(v -> {
             String newCatName=edtCatName.getText().toString();
-            c.setCatName(newCatName);
-            c.setTimeCre(strDate);
-            appDatabase.getInstance(getContext()).categoryDao().update(c);
-            mListCategory.remove(item.getGroupId());
-            mListCategory.add(c);
-            catAdapter.notifyDataSetChanged();
-            alertDialog.cancel();
+
+            System.out.println(newCatName);
+            System.out.println(numcat);
+
+            /**
+             * numcat = 1 la co san 1 category trong db
+             * numcat = 2 la co san 2 category trong db
+             */
+            if(numcat ==1){
+                m1 = mListCategory.get(0).catName;
+                System.out.println(m1);
+
+                if(newCatName.equals("Study") || newCatName.equals("Working") || newCatName.equals("Relax")){
+
+                    c.setCatName(newCatName);
+                    c.setTimeCre(strDate);
+                    appDatabase.getInstance(getContext()).categoryDao().update(c);
+                    mListCategory.remove(item.getGroupId());
+                    mListCategory.add(c);
+                    catAdapter.notifyDataSetChanged();
+                    alertDialog.cancel();
+                }
+                else {
+                    Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            else if(numcat==2){
+                m1 = mListCategory.get(0).catName;
+                m2 = mListCategory.get(1).catName;
+
+                System.out.println(m1);
+                System.out.println(m2);
+
+                if(newCatName.equals(m1) || newCatName.equals(m2)){
+                    Toast.makeText(getContext(), "Khong the edit Category vi category da ton tai", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if(!newCatName.equals(m1) && !newCatName.equals(m2)){
+
+                    if(newCatName.equals("Study")){
+                        c.setCatName(newCatName);
+                        c.setTimeCre(strDate);
+                        appDatabase.getInstance(getContext()).categoryDao().update(c);
+                        mListCategory.remove(item.getGroupId());
+                        mListCategory.add(c);
+                        catAdapter.notifyDataSetChanged();
+                        alertDialog.cancel();
+                    }
+                    else if(newCatName.equals("Working")){
+                        c.setCatName(newCatName);
+                        c.setTimeCre(strDate);
+                        appDatabase.getInstance(getContext()).categoryDao().update(c);
+                        mListCategory.remove(item.getGroupId());
+                        mListCategory.add(c);
+                        catAdapter.notifyDataSetChanged();
+                        alertDialog.cancel();
+                    }
+                    else if(newCatName.equals("Relax")){
+                        c.setCatName(newCatName);
+                        c.setTimeCre(strDate);
+                        appDatabase.getInstance(getContext()).categoryDao().update(c);
+                        mListCategory.remove(item.getGroupId());
+                        mListCategory.add(c);
+                        catAdapter.notifyDataSetChanged();
+                        alertDialog.cancel();
+                    }
+                    else {
+                        Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+
+                }
+
+
+
+            }
+
+            /*Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
+            return;*/
+
+
+//
+//
+//            c.setCatName(newCatName);
+//            c.setTimeCre(strDate);
+//            appDatabase.getInstance(getContext()).categoryDao().update(c);
+//            mListCategory.remove(item.getGroupId());
+//            mListCategory.add(c);
+//            catAdapter.notifyDataSetChanged();
+//            alertDialog.cancel();
         });
 
         /**

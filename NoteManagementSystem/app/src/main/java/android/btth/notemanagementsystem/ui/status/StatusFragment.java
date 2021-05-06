@@ -5,6 +5,8 @@ import android.btth.notemanagementsystem.Adapter.StatusAdapter;
 import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.dao.StatusDao;
+import android.btth.notemanagementsystem.entity.Note;
+import android.btth.notemanagementsystem.entity.NoteDetails;
 import android.btth.notemanagementsystem.entity.Priority;
 import android.btth.notemanagementsystem.entity.Status;
 import android.os.Bundle;
@@ -43,6 +45,8 @@ public class StatusFragment extends Fragment {
     AppDatabase appDatabase;
 
 
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -56,8 +60,16 @@ public class StatusFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                OpenInfoDialog();
+                /*numstatus = statusDao.getNumberStatus();
+                System.out.println(numstatus);
+                if(numstatus<3){
+                    OpenInfoDialog();
+                }
+                else {
+                    Toast.makeText(getContext(), "Khong the them Status vi chi duoc toi da 3 Status", Toast.LENGTH_LONG).show();
 
+                }*/
+                OpenInfoDialog();
             }
         });
 
@@ -107,7 +119,10 @@ public class StatusFragment extends Fragment {
         btnAddStatus.setOnClickListener(v -> {
 
             EditText edtStatusName = view.findViewById(R.id.edtStatus);
-
+/**
+ * flagforadd = true : du lieu dau vao dung
+ * flagforadd = true : du lieu dau vao sai
+ */
             String txtStatusName = edtStatusName.getText().toString().trim();
             boolean flagforadd = false;
             for (String obj: sttNameDefault
@@ -117,6 +132,9 @@ public class StatusFragment extends Fragment {
                 }
             }
             if(flagforadd==true) {
+                /**
+                 * kiem tra status da co trong db chua
+                 */
                 if(statusDao.checkSttNameinDb(txtStatusName)>0){
                     edtStatusName.setError("Status nay da ton tai");
                     return;
@@ -142,14 +160,38 @@ public class StatusFragment extends Fragment {
         });
 
     }
+    /**
+     * tao context menu cho tung item trong recyclerview
+     * @param item
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Status c = mListStatus.get(item.getGroupId());
+        int statusDetailsID = c.sttID;
+
+        int numberofnote = appDatabase.getInstance(getContext()).noteDao().countNotewithStatusID(statusDetailsID);
         switch (item.getItemId()){
+            /**
+             * case 001 la nut delete
+             * case 002 la nut edit
+             */
             case 001:
-                mListStatus.remove(item.getGroupId());
-                appDatabase.getInstance(getContext()).statusDao().delete(c);
-                statusAdapter.notifyDataSetChanged();
+
+
+                System.out.println(numberofnote);
+
+                if(numberofnote > 0){
+                    Toast.makeText(getContext(), "Khong the xoa vi status nay co note su dung", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    mListStatus.remove(item.getGroupId());
+                    appDatabase.getInstance(getContext()).statusDao().delete(c);
+                    statusAdapter.notifyDataSetChanged();
+                }
+
+
                 return true;
             case 002:
                 OpenInfoDialog2(c,item);
@@ -157,7 +199,11 @@ public class StatusFragment extends Fragment {
         }
         return super.onContextItemSelected(item);
     }
-
+    /**
+     * mo dialog khi an nut edit tu 1 item trong status
+     * @param c
+     * @param item
+     */
     public void OpenInfoDialog2(Status c, MenuItem item){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = getLayoutInflater().inflate(R.layout.layout_dialog_status,null);

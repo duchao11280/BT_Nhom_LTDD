@@ -42,4 +42,7 @@ public interface NoteDao {
     @Update
     void Update(Note note);
 
+    @Query("select count(*) from note where sttID=:statustocheck")
+    int countNotewithStatusID(int statustocheck);
+
 }

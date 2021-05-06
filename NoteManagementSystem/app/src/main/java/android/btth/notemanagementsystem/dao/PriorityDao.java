@@ -33,4 +33,7 @@ public interface PriorityDao {
 
     @Query("select prioID from priority where prioName=:pName Limit 1")
     int getPrioIdByPrioName(String pName);
+
+    @Query("SELECT COUNT(prioID) as NumberofPrio from priority")
+    int getNumberPrio();
 }

@@ -33,4 +33,7 @@ public interface CategoryDao {
 
     @Query("select catID from category where catName=:cName Limit 1")
     int getCatIdByCatName(String cName);
+
+    @Query("SELECT COUNT(catID) as NumberofCat from category")
+    int getNumberCat();
 }

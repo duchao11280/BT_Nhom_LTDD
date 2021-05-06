@@ -39,4 +39,10 @@ public interface StatusDao {
     //Check sttName in database
     @Query("Select Count(*) From status where sttName=:sttNameCheck")
     int checkSttNameinDb(String sttNameCheck);
+
+
+
+
+
+
 }
