@@ -35,9 +35,7 @@ public class CategoryFragment extends Fragment {
     private FloatingActionButton fbtnCat;
     private Button btnAdd;
     private Button btnClose;
-    private int numcat;
-    private String m1;
-    private String m2;
+
 
     String[] sttNameDefault= {"Working","Study","Relax"};
 
@@ -62,22 +60,13 @@ public class CategoryFragment extends Fragment {
         categoryDao = appDatabase.getInstance(getContext()).categoryDao();
 
         /**
-         *  mo 1 dialog khi an vao floating button
+         *  mo 1 dialog them category khi an vao floating button
          */
         fbtnCat =(FloatingActionButton)root.findViewById(R.id.fbtnCat);
         fbtnCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                /*numcat = categoryDao.getNumberCat();
-                System.out.println(numcat);
-                if(numcat<3){
-                    OpenInfoDialog();
-                }
-                else {
-                    Toast.makeText(getContext(), "Khong the them Category vi chi duoc toi da 3 category", Toast.LENGTH_LONG).show();
-
-                }*/
 
                 OpenInfoDialog();
 
@@ -118,7 +107,7 @@ public class CategoryFragment extends Fragment {
     }
 
     /**
-     * tao mot alertdialog
+     * dialog them category
      */
     public void OpenInfoDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -138,16 +127,6 @@ public class CategoryFragment extends Fragment {
 //            categoryDao.deleteAll();
         });
 
-//        EditText edtCatName = view.findViewById(R.id.edtCat);
-//        String txtCatName = edtCatName.getText().toString();
-//
-//        Calendar cal = Calendar.getInstance();
-//
-//        String strDate = DateFormat.format("EEE, MMMM/d/yyyy",cal).toString();
-//        //kiem tra du lieu co hay ko
-//        if(TextUtils.isEmpty(txtCatName) || TextUtils.isEmpty(strDate)){
-//            return;
-//        }
 /**
  * su kien nut add voi 1 category
  */
@@ -164,174 +143,10 @@ public class CategoryFragment extends Fragment {
             EditText edtCatName = view.findViewById(R.id.edtCat);
             String txtCatName = edtCatName.getText().toString();
 
-            /*Calendar cal = Calendar.getInstance();
-            String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();*/
-
-//            System.out.println(mListCategory.get(0).catName);
-//            System.out.println(mListCategory.get(1).catName);
-
-            numcat = categoryDao.getNumberCat();
-
-            System.out.println(txtCatName);
-
             /**
-             * numcat = 0 la ko ca category nao
-             * numcat = 1 la co san 1 category
-             * numcat = 2 la co san 2 category
+             * flagforadd = true : du lieu dau vao dung
+             * flagforadd = true : du lieu dau vao sai
              */
-            /*if(numcat == 0 ){
-                if(txtCatName.equals("Study")){
-                    categoryDao.insertCat(new Category( txtCatName, strDate));
-                    mListCategory=categoryDao.getListCategory();
-                    catAdapter.setData(mListCategory);
-                    rcvCat.setAdapter(catAdapter);
-
-                    alertDialog.cancel();
-                    return;
-                }
-                else if(txtCatName.equals("Working")){
-                    categoryDao.insertCat(new Category( txtCatName, strDate));
-                    mListCategory=categoryDao.getListCategory();
-                    catAdapter.setData(mListCategory);
-
-                    rcvCat.setAdapter(catAdapter);
-
-                    alertDialog.cancel();
-                    return;
-                }
-                else if(txtCatName.equals("Relax")){
-                    categoryDao.insertCat(new Category( txtCatName, strDate));
-                    mListCategory=categoryDao.getListCategory();
-                    catAdapter.setData(mListCategory);
-                    rcvCat.setAdapter(catAdapter);
-
-                    alertDialog.cancel();
-                    return;
-                }
-                else {
-                    Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-            else if(numcat==1){
-                m1 = mListCategory.get(0).catName;
-                System.out.println(m1);
-
-                if(!txtCatName.equals(m1)){
-
-                    if(txtCatName.equals("Study")){
-                        categoryDao.insertCat(new Category( txtCatName, strDate));
-                        mListCategory=categoryDao.getListCategory();
-                        catAdapter.setData(mListCategory);
-                        rcvCat.setAdapter(catAdapter);
-
-                        alertDialog.cancel();
-                        return;
-                    }
-                    else if(txtCatName.equals("Working")){
-                        categoryDao.insertCat(new Category( txtCatName, strDate));
-                        mListCategory=categoryDao.getListCategory();
-                        catAdapter.setData(mListCategory);
-
-                        rcvCat.setAdapter(catAdapter);
-
-                        alertDialog.cancel();
-                        return;
-                    }
-                    else if(txtCatName.equals("Relax")){
-                        categoryDao.insertCat(new Category( txtCatName, strDate));
-                        mListCategory=categoryDao.getListCategory();
-                        catAdapter.setData(mListCategory);
-                        rcvCat.setAdapter(catAdapter);
-
-                        alertDialog.cancel();
-                        return;
-                    }
-                    else {
-                        Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                }else {
-                    Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-
-            }
-            else if(numcat ==2){
-                m1 = mListCategory.get(0).catName;
-                m2 = mListCategory.get(1).catName;
-                System.out.println(m1);
-                System.out.println(m2);
-
-                if(!txtCatName.equals(m1) && !txtCatName.equals(m2)){
-                    if(txtCatName.equals("Study")){
-                        categoryDao.insertCat(new Category( txtCatName, strDate));
-                        mListCategory=categoryDao.getListCategory();
-                        catAdapter.setData(mListCategory);
-                        rcvCat.setAdapter(catAdapter);
-
-                        alertDialog.cancel();
-                        return;
-                    }
-                    else if(txtCatName.equals("Working")){
-                        categoryDao.insertCat(new Category( txtCatName, strDate));
-                        mListCategory=categoryDao.getListCategory();
-                        catAdapter.setData(mListCategory);
-
-                        rcvCat.setAdapter(catAdapter);
-
-                        alertDialog.cancel();
-                        return;
-                    }
-                    else if(txtCatName.equals("Relax")){
-                        categoryDao.insertCat(new Category( txtCatName, strDate));
-                        mListCategory=categoryDao.getListCategory();
-                        catAdapter.setData(mListCategory);
-                        rcvCat.setAdapter(catAdapter);
-
-                        alertDialog.cancel();
-                        return;
-                    }
-                    else {
-                        Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-                else {
-                    Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }*/
-
-
-
-            /*if(txtCatName != "Study" || txtCatName != "Working" || txtCatName != "Relax")
-            {
-                Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
-                return;
-            }
-            else {
-                *//**
-             * them du lieu va roomdatabase
-             *//*
-                categoryDao.insertCat(new Category( txtCatName, strDate));
-            }
-*/
-
-
-            /**
-             * cap nhat lai va hien thi len recyclerview
-             */
-            /*mListCategory=categoryDao.getListCategory();
-            catAdapter.setData(mListCategory);
-            rcvCat.setAdapter(catAdapter);
-
-            alertDialog.cancel();*/
-
-
-
 
             String txtCategoryName = edtCatName.getText().toString().trim();
             boolean flagforadd = false;
@@ -409,16 +224,7 @@ public class CategoryFragment extends Fragment {
 
                 return true;
             case 002:
-                /*numcat = categoryDao.getNumberCat();
 
-                System.out.println(numcat);
-
-                if(numcat<3){
-                    OpenInfoDialog2(c,item);
-                }
-                else {
-                    Toast.makeText(getContext(), "Khong the edit Category vi chi duoc toi da 3 category Study, Working, Relax", Toast.LENGTH_LONG).show();
-                }*/
                 OpenInfoDialog2(c,item);
                 return true;
         }
@@ -451,100 +257,12 @@ public class CategoryFragment extends Fragment {
          * su kien nut save
          */
         save.setOnClickListener(v -> {
-//            String newCatName=edtCatName.getText().toString();
 
-//            System.out.println(newCatName);
-//            System.out.println(numcat);
 
             /**
-             * numcat = 1 la co san 1 category trong db
-             * numcat = 2 la co san 2 category trong db
+             * flagforadd = true : du lieu dau vao dung
+             * flagforadd = true : du lieu dau vao sai
              */
-            /*if(numcat ==1){
-                m1 = mListCategory.get(0).catName;
-                System.out.println(m1);
-
-                if(newCatName.equals("Study") || newCatName.equals("Working") || newCatName.equals("Relax")){
-
-                    c.setCatName(newCatName);
-                    c.setTimeCre(strDate);
-                    appDatabase.getInstance(getContext()).categoryDao().update(c);
-                    mListCategory.remove(item.getGroupId());
-                    mListCategory.add(c);
-                    catAdapter.notifyDataSetChanged();
-                    alertDialog.cancel();
-                }
-                else {
-                    Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-            else if(numcat==2){
-                m1 = mListCategory.get(0).catName;
-                m2 = mListCategory.get(1).catName;
-
-                System.out.println(m1);
-                System.out.println(m2);
-
-                if(newCatName.equals(m1) || newCatName.equals(m2)){
-                    Toast.makeText(getContext(), "Khong the edit Category vi category da ton tai", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                else if(!newCatName.equals(m1) && !newCatName.equals(m2)){
-
-                    if(newCatName.equals("Study")){
-                        c.setCatName(newCatName);
-                        c.setTimeCre(strDate);
-                        appDatabase.getInstance(getContext()).categoryDao().update(c);
-                        mListCategory.remove(item.getGroupId());
-                        mListCategory.add(c);
-                        catAdapter.notifyDataSetChanged();
-                        alertDialog.cancel();
-                    }
-                    else if(newCatName.equals("Working")){
-                        c.setCatName(newCatName);
-                        c.setTimeCre(strDate);
-                        appDatabase.getInstance(getContext()).categoryDao().update(c);
-                        mListCategory.remove(item.getGroupId());
-                        mListCategory.add(c);
-                        catAdapter.notifyDataSetChanged();
-                        alertDialog.cancel();
-                    }
-                    else if(newCatName.equals("Relax")){
-                        c.setCatName(newCatName);
-                        c.setTimeCre(strDate);
-                        appDatabase.getInstance(getContext()).categoryDao().update(c);
-                        mListCategory.remove(item.getGroupId());
-                        mListCategory.add(c);
-                        catAdapter.notifyDataSetChanged();
-                        alertDialog.cancel();
-                    }
-                    else {
-                        Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-
-                }
-
-
-
-            }*/
-
-            /*Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
-            return;*/
-
-
-//
-//
-//            c.setCatName(newCatName);
-//            c.setTimeCre(strDate);
-//            appDatabase.getInstance(getContext()).categoryDao().update(c);
-//            mListCategory.remove(item.getGroupId());
-//            mListCategory.add(c);
-//            catAdapter.notifyDataSetChanged();
-//            alertDialog.cancel();
-
 
             String newCatName=edtCatName.getText().toString();
             boolean flagforadd = false;

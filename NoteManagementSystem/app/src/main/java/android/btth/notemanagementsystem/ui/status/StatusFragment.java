@@ -49,26 +49,25 @@ public class StatusFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+/**
+ * tao layout recylerview
+ */
         View root = inflater.inflate(R.layout.fragment_status, container, false);
         rcvStatus = (RecyclerView)root.findViewById(R.id.rcv_Status);
-
+/**
+ *  lay cac method tu DAO
+ */
         statusDao = appDatabase.getInstance(getContext()).statusDao();
 
         fbtnStatus =(FloatingActionButton)root.findViewById(R.id.fbtnStatus);
+        /**
+         * nut mo dialog them status
+         */
         fbtnStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                /*numstatus = statusDao.getNumberStatus();
-                System.out.println(numstatus);
-                if(numstatus<3){
-                    OpenInfoDialog();
-                }
-                else {
-                    Toast.makeText(getContext(), "Khong the them Status vi chi duoc toi da 3 Status", Toast.LENGTH_LONG).show();
 
-                }*/
                 OpenInfoDialog();
             }
         });
@@ -79,16 +78,22 @@ public class StatusFragment extends Fragment {
         statusAdapter = new StatusAdapter();
         mListStatus = new ArrayList<>();
 
-
+/**
+ * tao va set layout cho recylerview
+ */
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rcvStatus.setLayoutManager(linearLayoutManager);
 
 
 
         //gan cho mlist
-
+/**
+ * Lay du lieu tu list status
+ */
         mListStatus = statusDao.getListStatus();
-
+/**
+ * dua du lieu vo adapter va chuyen vao recyclerview
+ */
         statusAdapter.setData(mListStatus);
         rcvStatus.setAdapter(statusAdapter);
 
@@ -115,7 +120,9 @@ public class StatusFragment extends Fragment {
 
 
         btnAddStatus = view.findViewById(R.id.btnAddStatus);
-
+/**
+ * su kien nut add voi 1 status
+ */
         btnAddStatus.setOnClickListener(v -> {
 
             EditText edtStatusName = view.findViewById(R.id.edtStatus);
@@ -221,6 +228,11 @@ public class StatusFragment extends Fragment {
 //        alertDialog.setTitle("Category Form");
         alertDialog.show();
         save.setOnClickListener(v -> {
+
+            /**
+             * flagforadd = true : du lieu dau vao dung
+             * flagforadd = true : du lieu dau vao sai
+             */
             String newStatusName=edtStatusName.getText().toString();
             boolean flagforadd = false;
             for (String obj: sttNameDefault
