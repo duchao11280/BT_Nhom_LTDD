@@ -279,15 +279,31 @@ public class PriorityFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Priority c = mListPriority.get(item.getGroupId());
+
+        int prioDetailsID = c.prioID;
+
+        int numberofnote = appDatabase.getInstance(getContext()).noteDao().countNotewithPrioID(prioDetailsID);
+
         switch (item.getItemId()){
             /**
              * case 001 la nut delete
              * case 002 la nut edit
              */
             case 001:
-                mListPriority.remove(item.getGroupId());
-                appDatabase.getInstance(getContext()).priorityDao().deletePrio(c);
-                prioAdapter.notifyDataSetChanged();
+
+                System.out.println(numberofnote);
+
+                if(numberofnote > 0){
+                    Toast.makeText(getContext(), "Khong the xoa vi priority nay co note su dung", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    mListPriority.remove(item.getGroupId());
+                    appDatabase.getInstance(getContext()).priorityDao().deletePrio(c);
+                    prioAdapter.notifyDataSetChanged();
+                }
+
+
                 return true;
             case 002:
                 numprio = priorityDao.getNumberPrio();

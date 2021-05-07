@@ -45,4 +45,11 @@ public interface NoteDao {
     @Query("select count(*) from note where sttID=:statustocheck")
     int countNotewithStatusID(int statustocheck);
 
+    @Query("select count(*) from note where catID=:categorytocheck")
+    int countNotewithCategoryID(int categorytocheck);
+
+    @Query("select count(*) from note where prioID=:priotocheck")
+    int countNotewithPrioID(int priotocheck);
+
+
 }

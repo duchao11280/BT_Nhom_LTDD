@@ -6,6 +6,7 @@ import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.dao.CategoryDao;
 import android.btth.notemanagementsystem.entity.Category;
+import android.btth.notemanagementsystem.entity.Status;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -340,15 +341,31 @@ public class CategoryFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Category c = mListCategory.get(item.getGroupId());
+
+
+        int categoryDetailsID = c.catID;
+
+        int numberofnote = appDatabase.getInstance(getContext()).noteDao().countNotewithCategoryID(categoryDetailsID);
+
+
         switch (item.getItemId()){
             /**
              * case 001 la nut delete
              * case 002 la nut edit
              */
             case 001:
-                mListCategory.remove(item.getGroupId());
-                appDatabase.getInstance(getContext()).categoryDao().delete(c);
-                catAdapter.notifyDataSetChanged();
+
+                System.out.println(numberofnote);
+                if(numberofnote > 0){
+                    Toast.makeText(getContext(), "Khong the xoa vi category nay co note su dung", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    mListCategory.remove(item.getGroupId());
+                    appDatabase.getInstance(getContext()).categoryDao().delete(c);
+                    catAdapter.notifyDataSetChanged();
+                }
+
                 return true;
             case 002:
                 numcat = categoryDao.getNumberCat();
