@@ -54,7 +54,7 @@ public interface NoteDao {
 
     @Query("SELECT noteID,noteName,catName,prioName,sttName,timePlan,note.timeCre as timeCre " +
             "FROM note,category,priority,status " +
-            "Where note.catID= category.catID and note.prioID = priority.prioID and note.sttID= status.sttID and note.userID =:noteIDID")
+            "Where note.catID= category.catID and note.prioID = priority.prioID and note.sttID= status.sttID and note.noteID =:noteIDID")
     NoteDetails getNoteDetailByNoteIDID(int noteIDID);
 
 }

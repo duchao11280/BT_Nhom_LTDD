@@ -51,6 +51,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
     FloatingActionButton fbtnAddNote;
     private SharedPreferences sharedPreferences;
     int userID;
+    NoteDetails ndd;
     String[] lstCatName, lstPrioName,lstSttName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -85,6 +86,10 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
 
         return root;
     }
+
+    /**
+     * Dialog Add Note
+     */
     public void OpenInfoDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         View view = getLayoutInflater().inflate(R.layout.dialog_add_note,null);
@@ -162,6 +167,9 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         btnAdd.setOnClickListener(v -> {
             edtNoteName =view.findViewById(R.id.edtNoteName);
             String txtNoteName = edtNoteName.getText().toString();
+            /**
+             * Lay du lieu khi ma chon spinner
+             */
             int catID = AppDatabase.getInstance(getContext()).categoryDao().getCatIdByCatName(spnCat.getSelectedItem().toString());
             int prioID = AppDatabase.getInstance(getContext()).priorityDao().getPrioIdByPrioName(spnPrio.getSelectedItem().toString());
             int sttID = AppDatabase.getInstance(getContext()).statusDao().getSttIdBySttName(spnStt.getSelectedItem().toString());
@@ -196,6 +204,8 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         });
 
     }
+    /*
+    * Dialog Open Calendar*/
     public void OpenCalender()
     {
         //Initialize year, month, day
@@ -234,7 +244,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         //Set Data to add
         txtDate =  view.findViewById(R.id.txtDate);
 
-        NoteDetails ndd = AppDatabase.getInstance(getContext()).noteDao().getNoteDetailByNoteIDID(note.noteID);
+        ndd = AppDatabase.getInstance(getContext()).noteDao().getNoteDetailByNoteIDID(note.noteID);
 
         Calendar cal = Calendar.getInstance();
 
@@ -243,40 +253,35 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         // Spiner Category
 
 //        String[] initCat= {"Select category..."};
-        String[] initCat= {ndd.catName};
+        String[] initCat= {ndd.getCatName()};
 
         Spinner spnCat = (Spinner) view.findViewById(R.id.spnCat);
-
-
-
         lstCatName = adb.getInstance(getContext()).categoryDao().getCatName();
-
 
         // Plus two String
         List lista = new ArrayList(Arrays.asList(initCat));
         lista.addAll(Arrays.asList(lstCatName));
-
-        int flagfordeletename = 0;
+        // xoa trung
+        int flagfordeleteCatname = 0;
         for (Object abc: lista
         ) {
             if(abc.equals(ndd.catName)){
-                 flagfordeletename +=1 ;
+                 flagfordeleteCatname +=1 ;
 
-                if(flagfordeletename == 2){
+                if(flagfordeleteCatname == 2){
+
                     lista.remove(abc);
-
+                    break;
                 }
-
             }
-
         }
-
 
         Object[] a = lista.toArray();
 
         ArrayAdapter lstCat = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,a);
         lstCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCat.setAdapter(lstCat);
+
         //Spiner Prio
 
         Spinner spnPrio = (Spinner) view.findViewById(R.id.spnPrio);
@@ -286,6 +291,20 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         // Plus two String
         List listb = new ArrayList(Arrays.asList(initprio));
         listb.addAll(Arrays.asList(lstPrioName));
+
+        //xoa trung
+        int flagfordeletePrioname = 0;
+        for (Object abc: listb
+        ) {
+            if(abc.equals(ndd.prioName)){
+                flagfordeletePrioname +=1 ;
+
+                if(flagfordeletePrioname == 2){
+                    listb.remove(abc);
+                    break;
+                }
+            }
+        }
         Object[] b = listb.toArray();
 
         ArrayAdapter lstPrio = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,b);
@@ -299,6 +318,19 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         // Plus two String
         List listc = new ArrayList(Arrays.asList(initStt));
         listc.addAll(Arrays.asList(lstSttName));
+        //xoa trung
+        int flagfordeleteSttname = 0;
+        for (Object abc: listc
+        ) {
+            if(abc.equals(ndd.sttName)){
+                flagfordeleteSttname +=1 ;
+
+                if(flagfordeleteSttname == 2){
+                    listc.remove(abc);
+                    break;
+                }
+            }
+        }
         Object[] c = listc.toArray();
 
         ArrayAdapter lstStt = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,c);
@@ -308,7 +340,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
 
         btnClose = view.findViewById(R.id.btnClose);
         btnClose.setOnClickListener(v -> {
-            alertDialog.cancel();
+            alertDialog.dismiss();
         });
         btnTimePlan = view.findViewById(R.id.btnTimePlan);
         txtDate.setText(note.timePlan);
@@ -359,7 +391,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
             noteAdapter = new NoteAdapter(getContext(),noteDetailsList);
             recyclerView.setAdapter(noteAdapter);
 
-            alertDialog.cancel();
+            alertDialog.dismiss();
         });
 
     }
@@ -381,6 +413,10 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         int noteDetailsID = n.noteID;
         Note note = adb.getInstance(getContext()).noteDao().getNotebyNoteID(noteDetailsID);
         switch (item.getItemId()){
+            /**
+             * Case 001: Delete
+             * Case 002: Edit
+             */
             case 001:
                 adb.getInstance(getContext()).noteDao().delete(note);
                 noteDetailsList = adb.getInstance(getContext()).noteDao().getNoteByUserID(userID);
