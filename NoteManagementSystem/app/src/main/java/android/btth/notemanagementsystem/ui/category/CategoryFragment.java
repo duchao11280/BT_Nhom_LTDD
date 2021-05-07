@@ -6,7 +6,6 @@ import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.dao.CategoryDao;
 import android.btth.notemanagementsystem.entity.Category;
-import android.btth.notemanagementsystem.entity.Status;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -40,6 +39,8 @@ public class CategoryFragment extends Fragment {
     private String m1;
     private String m2;
 
+    String[] sttNameDefault= {"Working","Study","Relax"};
+
 
     public CategoryDao categoryDao;
 
@@ -68,7 +69,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                numcat = categoryDao.getNumberCat();
+                /*numcat = categoryDao.getNumberCat();
                 System.out.println(numcat);
                 if(numcat<3){
                     OpenInfoDialog();
@@ -76,9 +77,9 @@ public class CategoryFragment extends Fragment {
                 else {
                     Toast.makeText(getContext(), "Khong the them Category vi chi duoc toi da 3 category", Toast.LENGTH_LONG).show();
 
-                }
+                }*/
 
-
+                OpenInfoDialog();
 
             }
         });
@@ -163,8 +164,8 @@ public class CategoryFragment extends Fragment {
             EditText edtCatName = view.findViewById(R.id.edtCat);
             String txtCatName = edtCatName.getText().toString();
 
-            Calendar cal = Calendar.getInstance();
-            String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
+            /*Calendar cal = Calendar.getInstance();
+            String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();*/
 
 //            System.out.println(mListCategory.get(0).catName);
 //            System.out.println(mListCategory.get(1).catName);
@@ -178,7 +179,7 @@ public class CategoryFragment extends Fragment {
              * numcat = 1 la co san 1 category
              * numcat = 2 la co san 2 category
              */
-            if(numcat == 0 ){
+            /*if(numcat == 0 ){
                 if(txtCatName.equals("Study")){
                     categoryDao.insertCat(new Category( txtCatName, strDate));
                     mListCategory=categoryDao.getListCategory();
@@ -302,7 +303,7 @@ public class CategoryFragment extends Fragment {
                     Toast.makeText(getContext(), "Khong the them Category vi them Category phai nhap 1 trong 3 la Study, Working, Relax", Toast.LENGTH_LONG).show();
                     return;
                 }
-            }
+            }*/
 
 
 
@@ -313,8 +314,8 @@ public class CategoryFragment extends Fragment {
             }
             else {
                 *//**
-                 * them du lieu va roomdatabase
-                 *//*
+             * them du lieu va roomdatabase
+             *//*
                 categoryDao.insertCat(new Category( txtCatName, strDate));
             }
 */
@@ -323,11 +324,51 @@ public class CategoryFragment extends Fragment {
             /**
              * cap nhat lai va hien thi len recyclerview
              */
-            mListCategory=categoryDao.getListCategory();
+            /*mListCategory=categoryDao.getListCategory();
             catAdapter.setData(mListCategory);
             rcvCat.setAdapter(catAdapter);
 
-            alertDialog.cancel();
+            alertDialog.cancel();*/
+
+
+
+
+            String txtCategoryName = edtCatName.getText().toString().trim();
+            boolean flagforadd = false;
+            for (String obj: sttNameDefault
+            ) {
+                if(obj.equals(txtCategoryName)){
+                    flagforadd = true;
+                }
+            }
+            if(flagforadd==true) {
+                /**
+                 * kiem tra status da co trong db chua
+                 */
+                if(categoryDao.checkCatNameinDb(txtCategoryName)>0){
+                    edtCatName.setError("Category nay da ton tai");
+                    return;
+                }
+                else{
+                    Calendar cal = Calendar.getInstance();
+
+                    String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
+
+                    categoryDao.insertCat(  new Category( txtCategoryName, strDate));
+
+                    mListCategory=categoryDao.getListCategory();
+                    catAdapter.setData(mListCategory);
+                    rcvCat.setAdapter(catAdapter);
+
+                    alertDialog.cancel();
+                }
+            }
+            else {
+                edtCatName.setError("Vui long nhap dung ten Category");
+                return;
+            }
+
+
 
         });
 
@@ -368,7 +409,7 @@ public class CategoryFragment extends Fragment {
 
                 return true;
             case 002:
-                numcat = categoryDao.getNumberCat();
+                /*numcat = categoryDao.getNumberCat();
 
                 System.out.println(numcat);
 
@@ -377,8 +418,8 @@ public class CategoryFragment extends Fragment {
                 }
                 else {
                     Toast.makeText(getContext(), "Khong the edit Category vi chi duoc toi da 3 category Study, Working, Relax", Toast.LENGTH_LONG).show();
-                }
-
+                }*/
+                OpenInfoDialog2(c,item);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -410,16 +451,16 @@ public class CategoryFragment extends Fragment {
          * su kien nut save
          */
         save.setOnClickListener(v -> {
-            String newCatName=edtCatName.getText().toString();
+//            String newCatName=edtCatName.getText().toString();
 
-            System.out.println(newCatName);
-            System.out.println(numcat);
+//            System.out.println(newCatName);
+//            System.out.println(numcat);
 
             /**
              * numcat = 1 la co san 1 category trong db
              * numcat = 2 la co san 2 category trong db
              */
-            if(numcat ==1){
+            /*if(numcat ==1){
                 m1 = mListCategory.get(0).catName;
                 System.out.println(m1);
 
@@ -488,7 +529,7 @@ public class CategoryFragment extends Fragment {
 
 
 
-            }
+            }*/
 
             /*Toast.makeText(getContext(), "Khong the edit Category vi phai edit 1 trong 3 Study, Working, Relax", Toast.LENGTH_LONG).show();
             return;*/
@@ -503,6 +544,38 @@ public class CategoryFragment extends Fragment {
 //            mListCategory.add(c);
 //            catAdapter.notifyDataSetChanged();
 //            alertDialog.cancel();
+
+
+            String newCatName=edtCatName.getText().toString();
+            boolean flagforadd = false;
+            for (String obj: sttNameDefault
+            ) {
+                if(obj.equals(newCatName)){
+                    flagforadd = true;
+                }
+            }
+            if(flagforadd==true) {
+                if(categoryDao.checkCatNameinDb(newCatName)>0){
+                    edtCatName.setError("Category nay da ton tai");
+                    return;
+                }
+                else{
+                    c.setCatName(newCatName);
+                    c.setTimeCre(strDate);
+                    appDatabase.getInstance(getContext()).categoryDao().update(c);
+                    mListCategory.remove(item.getGroupId());
+                    mListCategory.add(c);
+                    catAdapter.notifyDataSetChanged();
+                    alertDialog.cancel();
+                }
+            }
+            else {
+                edtCatName.setError("Vui long nhap dung ten Category");
+                return;
+            }
+
+
+
         });
 
         /**

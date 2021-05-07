@@ -36,4 +36,8 @@ public interface PriorityDao {
 
     @Query("SELECT COUNT(prioID) as NumberofPrio from priority")
     int getNumberPrio();
+
+    //Check prioName in database
+    @Query("Select Count(*) From priority where prioName=:prioNameCheck")
+    int checkPrioNameinDb(String prioNameCheck);
 }

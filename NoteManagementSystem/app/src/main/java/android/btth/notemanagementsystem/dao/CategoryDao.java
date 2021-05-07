@@ -36,4 +36,8 @@ public interface CategoryDao {
 
     @Query("SELECT COUNT(catID) as NumberofCat from category")
     int getNumberCat();
+
+    //Check catName in database
+    @Query("Select Count(*) From category where catName=:catNameCheck")
+    int checkCatNameinDb(String catNameCheck);
 }

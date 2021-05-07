@@ -5,7 +5,6 @@ import android.btth.notemanagementsystem.Adapter.PrioAdapter;
 import android.btth.notemanagementsystem.AppDatabase;
 import android.btth.notemanagementsystem.R;
 import android.btth.notemanagementsystem.dao.PriorityDao;
-import android.btth.notemanagementsystem.entity.Category;
 import android.btth.notemanagementsystem.entity.Priority;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -40,6 +39,8 @@ public class PriorityFragment extends Fragment {
     private String m1;
     private String m2;
 
+    String[] sttNameDefault= {"High","Medium","Low"};
+
     public PriorityDao priorityDao;
 
     AppDatabase appDatabase;
@@ -57,7 +58,7 @@ public class PriorityFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                numprio = priorityDao.getNumberPrio();
+                /*numprio = priorityDao.getNumberPrio();
                 System.out.println(numprio);
                 if(numprio<3){
                     OpenInfoDialog();
@@ -65,8 +66,8 @@ public class PriorityFragment extends Fragment {
                 else {
                     Toast.makeText(getContext(), "Khong the them Priority vi chi duoc toi da 3 Priority", Toast.LENGTH_LONG).show();
 
-                }
-
+                }*/
+                OpenInfoDialog();
             }
         });
 
@@ -122,20 +123,20 @@ public class PriorityFragment extends Fragment {
             EditText edtPrioName = view.findViewById(R.id.edtPrio);
             String txtPrioName = edtPrioName.getText().toString();
 
-            Calendar cal = Calendar.getInstance();
+            /*Calendar cal = Calendar.getInstance();
 
             String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
 
 
             numprio = priorityDao.getNumberPrio();
-            System.out.println(txtPrioName);
+            System.out.println(txtPrioName);*/
 
 /**
  * numprio = 0 la ko ca category nao
  * numprio = 1 la co san 1 category
  * numprio = 2 la co san 2 category
  */
-            if(numprio == 0 ){
+            /*if(numprio == 0 ){
                 if(txtPrioName.equals("High")){
                     priorityDao.insertPrio(new Priority( txtPrioName, strDate));
                     mListPriority=priorityDao.getListPriority();
@@ -256,17 +257,54 @@ public class PriorityFragment extends Fragment {
                     Toast.makeText(getContext(), "Khong the them Priority vi them Priority phai nhap 1 trong 3 la High, Medium, Low", Toast.LENGTH_LONG).show();
                     return;
                 }
-            }
+            }*/
 
 
 
 //            priorityDao.insertPrio(new Priority(txtPrioName, strDate));
 
-            mListPriority=priorityDao.getListPriority();
+            /*mListPriority=priorityDao.getListPriority();
             prioAdapter.setData(mListPriority);
             rcvPrio.setAdapter(prioAdapter);
 
-            alertDialog.cancel();
+            alertDialog.cancel();*/
+
+
+            String txtPriorityName = edtPrioName.getText().toString().trim();
+            boolean flagforadd = false;
+            for (String obj: sttNameDefault
+            ) {
+                if(obj.equals(txtPriorityName)){
+                    flagforadd = true;
+                }
+            }
+            if(flagforadd==true) {
+                /**
+                 * kiem tra status da co trong db chua
+                 */
+                if(priorityDao.checkPrioNameinDb(txtPriorityName)>0){
+                    edtPrioName.setError("Priority nay da ton tai");
+                    return;
+                }
+                else{
+                    Calendar cal = Calendar.getInstance();
+
+                    String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss",cal).toString();
+
+                    priorityDao.insertPrio(  new Priority( txtPriorityName, strDate));
+
+                    mListPriority=priorityDao.getListPriority();
+                    prioAdapter.setData(mListPriority);
+                    rcvPrio.setAdapter(prioAdapter);
+
+                    alertDialog.cancel();
+                }
+            }
+            else {
+                edtPrioName.setError("Vui long nhap dung ten Priority");
+                return;
+            }
+
 
         });
 
@@ -306,7 +344,7 @@ public class PriorityFragment extends Fragment {
 
                 return true;
             case 002:
-                numprio = priorityDao.getNumberPrio();
+                /*numprio = priorityDao.getNumberPrio();
 
                 System.out.println(numprio);
 
@@ -315,8 +353,8 @@ public class PriorityFragment extends Fragment {
                 }
                 else {
                     Toast.makeText(getContext(), "Khong the edit Category vi chi duoc toi da 3 category Study, Working, Relax", Toast.LENGTH_LONG).show();
-                }
-
+                }*/
+                OpenInfoDialog2(c,item);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -345,17 +383,17 @@ public class PriorityFragment extends Fragment {
          * su kien nut save
          */
         save.setOnClickListener(v -> {
-            String newPrioName=edtPrioName.getText().toString();
+            /*String newPrioName=edtPrioName.getText().toString();
 
 
             System.out.println(newPrioName);
-            System.out.println(numprio);
+            System.out.println(numprio);*/
 
-        /**
-         * numcat = 1 la co san 1 priority trong db
-         * numcat = 2 la co san 2 priority trong db
-         */
-            if(numprio ==1){
+            /**
+             * numcat = 1 la co san 1 priority trong db
+             * numcat = 2 la co san 2 priority trong db
+             */
+            /*if(numprio ==1){
                 m1 = mListPriority.get(0).prioName;
                 System.out.println(m1);
 
@@ -424,7 +462,7 @@ public class PriorityFragment extends Fragment {
 
 
 
-            }
+            }*/
 
 /*
             c.setPrioName(newPrioName);
@@ -434,6 +472,35 @@ public class PriorityFragment extends Fragment {
             mListPriority.add(c);
             prioAdapter.notifyDataSetChanged();
             alertDialog.cancel();*/
+
+
+            String newPrioName=edtPrioName.getText().toString();
+            boolean flagforadd = false;
+            for (String obj: sttNameDefault
+            ) {
+                if(obj.equals(newPrioName)){
+                    flagforadd = true;
+                }
+            }
+            if(flagforadd==true) {
+                if(priorityDao.checkPrioNameinDb(newPrioName)>0){
+                    edtPrioName.setError("Priority nay da ton tai");
+                    return;
+                }
+                else{
+                    c.setPrioName(newPrioName);
+                    c.setTimeCre(strDate);
+                    appDatabase.getInstance(getContext()).priorityDao().update(c);
+                    mListPriority.remove(item.getGroupId());
+                    mListPriority.add(c);
+                    prioAdapter.notifyDataSetChanged();
+                    alertDialog.cancel();
+                }
+            }
+            else {
+                edtPrioName.setError("Vui long nhap dung ten Priority");
+                return;
+            }
 
         });
 
