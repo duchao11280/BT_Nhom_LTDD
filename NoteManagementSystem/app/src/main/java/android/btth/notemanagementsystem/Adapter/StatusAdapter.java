@@ -22,7 +22,12 @@ public class StatusAdapter extends  RecyclerView.Adapter<StatusAdapter.StatusVie
         this.mListStatus = list;
         notifyDataSetChanged();
     }
-
+    /**
+     * tao view layout
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public StatusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,7 +35,11 @@ public class StatusAdapter extends  RecyclerView.Adapter<StatusAdapter.StatusVie
 
         return new StatusViewHolder(view);
     }
-
+    /**
+     * set du lieu len view
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull StatusViewHolder holder, int position) {
         Status status = mListStatus.get(position);
@@ -39,7 +48,10 @@ public class StatusAdapter extends  RecyclerView.Adapter<StatusAdapter.StatusVie
         holder.txtCatName.setText("Name: " + status.getSttName());
         holder.txtCatDate.setText("Created Date: " + status.getTimeCre());
     }
-
+    /**
+     * Tra ve so luong item trong list
+     * @return
+     */
     @Override
     public int getItemCount() {
         if(mListStatus != null){
@@ -47,7 +59,7 @@ public class StatusAdapter extends  RecyclerView.Adapter<StatusAdapter.StatusVie
         }
         return 0;
     }
-
+    //Thiet ke view de truyen vao statusadapter
     public class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
         private TextView txtCatName;
@@ -71,9 +83,6 @@ public class StatusAdapter extends  RecyclerView.Adapter<StatusAdapter.StatusVie
         }
     }
 
-    public void deleteitem(int position){
-        mListStatus.remove(position);
-        notifyDataSetChanged();
-    }
+
 
 }

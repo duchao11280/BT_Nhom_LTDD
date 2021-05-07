@@ -105,9 +105,15 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         Spinner spnCat = (Spinner) view.findViewById(R.id.spnCat);
         lstCatName = adb.getInstance(getContext()).categoryDao().getCatName();
         // Plus two String
+
+
+
         List lista = new ArrayList(Arrays.asList(initCat));
         lista.addAll(Arrays.asList(lstCatName));
         Object[] a = lista.toArray();
+
+
+
 
         ArrayAdapter lstCat = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,a);
         lstCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -228,18 +234,44 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         //Set Data to add
         txtDate =  view.findViewById(R.id.txtDate);
 
+        NoteDetails ndd = AppDatabase.getInstance(getContext()).noteDao().getNoteDetailByNoteIDID(note.noteID);
+
         Calendar cal = Calendar.getInstance();
 
         String strDate = DateFormat.format("yyyy-MM-dd hh:mm:ss", cal).toString();
 //        String strPlan =
         // Spiner Category
-        String[] initCat= {"Select category..."};
+
+//        String[] initCat= {"Select category..."};
+        String[] initCat= {ndd.catName};
 
         Spinner spnCat = (Spinner) view.findViewById(R.id.spnCat);
+
+
+
         lstCatName = adb.getInstance(getContext()).categoryDao().getCatName();
+
+
         // Plus two String
         List lista = new ArrayList(Arrays.asList(initCat));
         lista.addAll(Arrays.asList(lstCatName));
+
+        int flagfordeletename = 0;
+        for (Object abc: lista
+        ) {
+            if(abc.equals(ndd.catName)){
+                 flagfordeletename +=1 ;
+
+                if(flagfordeletename == 2){
+                    lista.remove(abc);
+
+                }
+
+            }
+
+        }
+
+
         Object[] a = lista.toArray();
 
         ArrayAdapter lstCat = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,a);
@@ -248,7 +280,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         //Spiner Prio
 
         Spinner spnPrio = (Spinner) view.findViewById(R.id.spnPrio);
-        String[] initprio= {"Select priority..."};
+        String[] initprio= {ndd.prioName};
 
         lstPrioName = adb.getInstance(getContext()).priorityDao().getPrioName();
         // Plus two String
@@ -261,7 +293,7 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         spnPrio.setAdapter(lstPrio);
         //Spiner Stt
 
-        String[] initStt= {"Select status..."};
+        String[] initStt= {ndd.sttName};
         Spinner spnStt = (Spinner) view.findViewById(R.id.spnStt);
         lstSttName = adb.getInstance(getContext()).statusDao().getSttName();
         // Plus two String

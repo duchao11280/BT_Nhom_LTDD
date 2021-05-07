@@ -68,7 +68,7 @@ public class CatAdapter extends  RecyclerView.Adapter<CatAdapter.CatViewHolder> 
 
 
 
-    //Thiet ke de truyen vao catadapter
+    //Thiet ke view de truyen vao catadapter
     public class CatViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
         private TextView txtCatName;
@@ -92,10 +92,7 @@ public class CatAdapter extends  RecyclerView.Adapter<CatAdapter.CatViewHolder> 
         }
     }
 
-    public void deleteitem(int position){
-        mListCategory.remove(position);
-        notifyDataSetChanged();
-    }
+
 
 
 }

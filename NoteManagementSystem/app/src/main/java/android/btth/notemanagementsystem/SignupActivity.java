@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -90,5 +91,6 @@ public class SignupActivity extends AppCompatActivity {
         edtEmail.setText("");
         edtPass.setText("");
         edtConfirnPass.setText("");
+        Toast.makeText(getBaseContext(), "Dang ky thanh cong", Toast.LENGTH_LONG).show();
     }
 }

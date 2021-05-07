@@ -22,7 +22,12 @@ public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolde
         this.mListPriority = list;
         notifyDataSetChanged();
     }
-
+    /**
+     * tao view layout
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public PrioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,7 +36,11 @@ public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolde
         return new PrioViewHolder(view);
 
     }
-
+    /**
+     * set du lieu len view
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull PrioViewHolder holder, int position) {
         Priority priority = mListPriority.get(position);
@@ -40,7 +49,10 @@ public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolde
         holder.txtCatName.setText("Name: " + priority.getPrioName());
         holder.txtCatDate.setText("Created Date: " + priority.getTimeCre());
     }
-
+    /**
+     * Tra ve so luong item trong list
+     * @return
+     */
     @Override
     public int getItemCount() {
         if(mListPriority != null){
@@ -49,7 +61,7 @@ public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolde
         return 0;
     }
 
-    //Thiet ke de truyen vao catadapter
+    //Thiet ke view de truyen vao prioadapter
     public class PrioViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
         private TextView txtCatName;
@@ -71,10 +83,7 @@ public class PrioAdapter extends  RecyclerView.Adapter<PrioAdapter.PrioViewHolde
             menu.add(this.getAdapterPosition(),002,1,"Edit");
         }
     }
-    public void deleteitem(int position){
-        mListPriority.remove(position);
-        notifyDataSetChanged();
-    }
+
 
 
 }
