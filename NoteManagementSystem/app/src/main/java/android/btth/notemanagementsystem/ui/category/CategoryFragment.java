@@ -37,7 +37,7 @@ public class CategoryFragment extends Fragment {
     private Button btnClose;
 
 
-    String[] sttNameDefault= {"Working","Study","Relax"};
+    String[] catNameDefault= {"Working","Study","Relax"};
 
 
     public CategoryDao categoryDao;
@@ -150,7 +150,7 @@ public class CategoryFragment extends Fragment {
 
             String txtCategoryName = edtCatName.getText().toString().trim();
             boolean flagforadd = false;
-            for (String obj: sttNameDefault
+            for (String obj: catNameDefault
             ) {
                 if(obj.equals(txtCategoryName)){
                     flagforadd = true;
@@ -266,7 +266,7 @@ public class CategoryFragment extends Fragment {
 
             String newCatName=edtCatName.getText().toString();
             boolean flagforadd = false;
-            for (String obj: sttNameDefault
+            for (String obj: catNameDefault
             ) {
                 if(obj.equals(newCatName)){
                     flagforadd = true;

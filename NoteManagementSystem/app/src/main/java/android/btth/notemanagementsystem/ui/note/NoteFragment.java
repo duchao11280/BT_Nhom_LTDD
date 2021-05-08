@@ -261,22 +261,17 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         // Plus two String
         List lista = new ArrayList(Arrays.asList(initCat));
         lista.addAll(Arrays.asList(lstCatName));
+        List listatemp = new ArrayList();
         // xoa trung
         int flagfordeleteCatname = 0;
         for (Object abc: lista
         ) {
-            if(abc.equals(ndd.catName)){
-                 flagfordeleteCatname +=1 ;
-
-                if(flagfordeleteCatname == 2){
-
-                    lista.remove(abc);
-                    break;
-                }
+            if (!listatemp.contains(abc)) {
+                listatemp.add(abc);
             }
         }
 
-        Object[] a = lista.toArray();
+        Object[] a = listatemp.toArray();
 
         ArrayAdapter lstCat = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,a);
         lstCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -291,21 +286,16 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         // Plus two String
         List listb = new ArrayList(Arrays.asList(initprio));
         listb.addAll(Arrays.asList(lstPrioName));
-
+        List listbtemp = new ArrayList();
         //xoa trung
         int flagfordeletePrioname = 0;
         for (Object abc: listb
         ) {
-            if(abc.equals(ndd.prioName)){
-                flagfordeletePrioname +=1 ;
-
-                if(flagfordeletePrioname == 2){
-                    listb.remove(abc);
-                    break;
-                }
+            if (!listbtemp.contains(abc)) {
+                listbtemp.add(abc);
             }
         }
-        Object[] b = listb.toArray();
+        Object[] b = listbtemp.toArray();
 
         ArrayAdapter lstPrio = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,b);
         lstPrio.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -319,19 +309,15 @@ public class NoteFragment extends Fragment implements AdapterView.OnItemSelected
         List listc = new ArrayList(Arrays.asList(initStt));
         listc.addAll(Arrays.asList(lstSttName));
         //xoa trung
+        List listctemp = new ArrayList();
         int flagfordeleteSttname = 0;
         for (Object abc: listc
         ) {
-            if(abc.equals(ndd.sttName)){
-                flagfordeleteSttname +=1 ;
-
-                if(flagfordeleteSttname == 2){
-                    listc.remove(abc);
-                    break;
-                }
+            if (!listctemp.contains(abc)) {
+                listctemp.add(abc);
             }
         }
-        Object[] c = listc.toArray();
+        Object[] c = listctemp.toArray();
 
         ArrayAdapter lstStt = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,c);
         lstStt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
